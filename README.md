@@ -25,6 +25,8 @@ Response
 |Factor| Implementation|
 |---|---|
 |Codebase|Gitlab|
+|Dependencies|npm & custom shell scripting & env for dependency isolation|
+
 
 
 ## References
