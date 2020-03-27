@@ -20,9 +20,16 @@ Response
     sentiment: "positive | negative | neutral"
 }
 ```
+## 12 Factors
+
+|Factor| Implementation|
+|---|---|
+|Codebase|Gitlab|
+
 
 ## References
 - [12factor](https://12factor.net/)
+
 
 
 ## TODO
