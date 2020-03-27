@@ -26,7 +26,8 @@ Response
 
 
 ## TODO
-- Give Mike permissions
+- ~~Give Mike permissions~~
 - Specify 12 factors used under references
 - Add a link to Spacy
 - Find a couple good articles on NLP
+- Respond to requests with netcat (nc)
