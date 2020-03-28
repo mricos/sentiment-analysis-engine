@@ -33,7 +33,10 @@ Response
 
 
 ## References
-- [12factor](https://12factor.net/)
+- [12 Factor](https://12factor.net/)
+- [12 factor slides](https://peterlyons.com/twelve-factor-nodejs/#/16)
+- [twelve-factor methodology used at cloud.gov](adborden/twelve-factor-nodejs)
+- [Ben Awad on CI/CD clean-up video](https://www.youtube.com/watch?v=CYlUcIH3dPg)
 
 
 
