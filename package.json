@@ -1,0 +1,20 @@
+{
+  "name": "sentiment-analysis-engine",
+  "version": "1.0.0",
+  "description": "Provides positive, negative, or neutral classification for a sample of  English language text.",
+  "main": "index.js",
+  "type": "module",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://gitlab.com/zoverlvx/sentiment-analysis-engine.git"
+  },
+  "author": "Mike Ricos, Zach Overhulser",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://gitlab.com/zoverlvx/sentiment-analysis-engine/issues"
+  },
+  "homepage": "https://gitlab.com/zoverlvx/sentiment-analysis-engine#README"
+}
