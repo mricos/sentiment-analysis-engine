@@ -1,20 +1,19 @@
 {
-  "name": "sentiment-analysis-engine",
-  "version": "1.0.0",
-  "description": "Provides positive, negative, or neutral classification for a sample of  English language text.",
-  "main": "index.js",
+  "name": "node-nlp",
+  "version": "0.0.0",
+  "private": true,
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "start": "node --inspect ./bin/www.js"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://gitlab.com/zoverlvx/sentiment-analysis-engine.git"
-  },
-  "author": "Mike Ricos, Zach Overhulser",
-  "license": "ISC",
-  "bugs": {
-    "url": "https://gitlab.com/zoverlvx/sentiment-analysis-engine/issues"
-  },
-  "homepage": "https://gitlab.com/zoverlvx/sentiment-analysis-engine#README"
+  "dependencies": {
+    "apos-to-lex-form": "^1.0.5",
+    "cookie-parser": "~1.4.4",
+    "debug": "~2.6.9",
+    "express": "~4.16.1",
+    "morgan": "~1.9.1",
+    "natural": "^0.6.3",
+    "spelling-corrector": "^3.0.0",
+    "stopword": "^1.0.0"
+  }
 }

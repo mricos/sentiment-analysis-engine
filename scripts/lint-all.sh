@@ -1,4 +1,5 @@
 node lint.js \
 ./index.js \
 ./dependencies/jslint.js \
-./lint.js
+./lint.js \
+./bin/*
