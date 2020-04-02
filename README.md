@@ -35,6 +35,7 @@ Response
 |Disposability|Handle SIGTERM and possibly handle events with a task queue.|
 |Dev/prod parity|No database, 2 branches: dev and master, daily merges, smaill team, dev tools all Unix|
 |Logs|All output to stdout, aggregated by process management script|
+|Admin processes|Support a REPL, support remote shell commands, separate admin dir|
 ## References
 - [12 Factor](https://12factor.net/)
 - [12 factor slides](https://peterlyons.com/twelve-factor-nodejs/#/16)
