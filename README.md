@@ -33,7 +33,7 @@ Response
 |Port binding| All ports are defined in .env and added at build time|
 |Concurreny | Define a shell script to start and stop processes via GitLab CI/CD|
 |Disposability|Handle SIGTERM and possibly handle events with a task queue.|
-
+|Dev/prod parity|No database, 2 branches: dev and master, daily merges, smaill team, dev tools all Unix|
 
 ## References
 - [12 Factor](https://12factor.net/)
