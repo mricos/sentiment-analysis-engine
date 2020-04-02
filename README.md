@@ -31,6 +31,7 @@ Response
 |Build, release, run|Use npm build system and GitLab CI/CD|
 |Processes|Shell script kicks off 2 processes: static server and API endpoint|
 |Port binding| All ports are defined in .env and added at build time|
+|Concurreny | Define a shell script to start and stop processes via GitLab CI/CD|
 
 
 
