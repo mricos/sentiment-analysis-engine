@@ -29,6 +29,7 @@ Response
 |Config|Store keys in .env file|
 |Backing services|Twitter API & Google Translate API, no file-based io. Investigating [reload module at runtime](https://stackoverflow.com/questions/26633901/reload-module-at-runtime)|
 |Build, release, run|Use npm build system and GitLab CI/CD|
+|Processes|Shell script kicks off 2 processes: static server and API endpoint|
 
 
 
