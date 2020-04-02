@@ -28,6 +28,7 @@ Response
 |Dependencies|npm & custom shell scripting & env for dependency isolation|
 |Config|Store keys in .env file|
 |Backing services|Twitter API & Google Translate API, no file-based io. Investigating [reload module at runtime](https://stackoverflow.com/questions/26633901/reload-module-at-runtime)|
+|Build, release, run|Use npm build system and GitLab CI/CD|
 
 
 
@@ -35,7 +36,7 @@ Response
 ## References
 - [12 Factor](https://12factor.net/)
 - [12 factor slides](https://peterlyons.com/twelve-factor-nodejs/#/16)
-- [twelve-factor methodology used at cloud.gov](adborden/twelve-factor-nodejs)
+- [twelve-factor methodology used at cloud.gov](https://github.com/adborden/twelve-factor-nodejs)
 - [Ben Awad on CI/CD clean-up video](https://www.youtube.com/watch?v=CYlUcIH3dPg)
 
 
