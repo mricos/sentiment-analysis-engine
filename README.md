@@ -29,10 +29,13 @@ Response
 |Config|Store keys in .env file|
 |Backing services|Twitter API & Google Translate API, no file-based io. Investigating [reload module at runtime](https://stackoverflow.com/questions/26633901/reload-module-at-runtime)|
 |Build, release, run|Use npm build system and GitLab CI/CD|
-
-
-
-
+|Processes|Shell script kicks off 2 processes: static server and API endpoint|
+|Port binding| All ports are defined in .env and added at build time|
+|Concurreny | Define a shell script to start and stop processes via GitLab CI/CD|
+|Disposability|Handle SIGTERM and possibly handle events with a task queue.|
+|Dev/prod parity|No database, 2 branches: dev and master, daily merges, smaill team, dev tools all Unix|
+|Logs|All output to stdout, aggregated by process management script|
+|Admin processes|Support a REPL, support remote shell commands, separate admin dir|
 ## References
 - [12 Factor](https://12factor.net/)
 - [12 factor slides](https://peterlyons.com/twelve-factor-nodejs/#/16)
