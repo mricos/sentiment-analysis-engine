@@ -23,4 +23,4 @@ app.use(express.static(path.join(__dirname, "public")));
 app.use("/", indexRouter);
 app.use("/api/nlp", nlpRouter);
 
-export default app;
+export default Object.freeze(app);
