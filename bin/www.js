@@ -1,4 +1,12 @@
+/* 
+Original example #! as first two characters so the file 
+could be run as an full blooded linux command (and not as the 
+input to node). But we want to explicitly set runtime, etc,
+and don't want someone to run this file from the command line.
+
 #!/usr/bin/env node
+
+*/
 
 /*jslint
     node
