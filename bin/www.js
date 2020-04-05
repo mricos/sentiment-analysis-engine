@@ -1,6 +1,6 @@
-/* 
-Original example #! as first two characters so the file 
-could be run as an full blooded linux command (and not as the 
+/*
+Original example #! as first two characters so the file
+could be run as a full blooded linux command (and not as the
 input to node). But we want to explicitly set runtime, etc,
 and don't want someone to run this file from the command line.
 
@@ -64,9 +64,11 @@ function onError(error) {
     if (error.syscall !== "listen") {
         throw error;
     }
-    const bind = typeof PORT === "string"
+    const bind = (
+        typeof PORT === "string"
         ? "Pipe " + PORT
-        : "Port " + PORT;
+        : "Port " + PORT
+    );
 
     // handle specific listen errors with friendly messages
     switch (error.code) {
@@ -90,9 +92,11 @@ function onError(error) {
 function onListening() {
     "use strict";
     const addr = server.address();
-    const bind = typeof addr === "string"
+    const bind = (
+        typeof addr === "string"
         ? "pipe " + addr
-        : "port " + addr.port;
+        : "port " + addr.port
+    );
     debug("Listening on " + bind);
 }
 
