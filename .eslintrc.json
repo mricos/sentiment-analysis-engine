@@ -15,5 +15,9 @@
         "sourceType": "module"
     },
     "rules": {
+        "indent": ["error", 4],
+        "quotes": ["error", "double"],
+        "multiline-ternary": ["error", "always"],
+        "operator-linebreak": [2, "before"]
     }
 }
