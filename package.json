@@ -15,5 +15,9 @@
     "natural": "^0.6.3",
     "spelling-corrector": "^3.0.0",
     "stopword": "^1.0.0"
+  },
+  "devDependencies": {
+    "eslint": "^6.8.0",
+    "eslint-config-google": "^0.14.0"
   }
 }
