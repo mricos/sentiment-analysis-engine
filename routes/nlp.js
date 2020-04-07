@@ -3,15 +3,15 @@ import aposToLexForm from "apos-to-lex-form";
 import natural from "natural";
 
 import SpellCorrector from "spelling-corrector";
-import SW from "stopword";
+import sw from "stopword";
 
 const router = express.Router();
 
 const spellCorrector = new SpellCorrector();
 spellCorrector.loadDictionary();
 
-router.post("/s-analyzer", function (req, res, next) {
-    const text = typeof(req.body.text) 
+router.post("/s-analyzer", function(req, res, next) {
+    const text = typeof(req.body.text)
         === "string" && req.body.text.length > 0
         ? req.body.text
         : false;
@@ -23,40 +23,37 @@ router.post("/s-analyzer", function (req, res, next) {
         === "string"
         ? req.body.language
         : false;
-	
     if (
         text
         && key
         && language
     ) {
         const lexedReview = aposToLexForm(text);
-	    const casedReview = lexedReview.toLowerCase();
-	    const alphaOnlyReview = casedReview
-		    .replace(/[^a-zA-Z\s]+/g, "");
-	    const {WordTokenizer} = natural;
-	    const tokenizer = new WordTokenizer();
-	    const tokenizedReview = tokenizer
+        const casedReview = lexedReview.toLowerCase();
+        const alphaOnlyReview = casedReview
+            .replace(/[^a-zA-Z\s]+/g, "");
+        const {WordTokenizer} = natural;
+        const tokenizer = new WordTokenizer();
+        const tokenizedReview = tokenizer
             .tokenize(alphaOnlyReview);
 
-	    tokenizedReview.forEach(function(word, index) {
-		    tokenizedReview[index] = spellCorrector.correct(word);
-	    });
+        tokenizedReview.forEach(function(word, index) {
+            tokenizedReview[index] = spellCorrector.correct(word);
+        });
 
-	    const filteredReview = SW.removeStopwords(
-            tokenizedReview
+        const filteredReview = sw.removeStopwords(tokenizedReview);
+
+        const {SentimentAnalyzer, PorterStemmer} = natural;
+        const analyzer = new SentimentAnalyzer(
+            "English",
+            PorterStemmer,
+            "afinn"
         );
+        const sentiment = analyzer.getSentiment(filteredReview);
 
-	    const {SentimentAnalyzer, PorterStemmer} = natural;
-	    const analyzer = new SentimentAnalyzer(
-		    "English", 
-		    PorterStemmer, 
-		    "afinn"
-	    );
-	    const sentiment = analyzer.getSentiment(filteredReview);
-
-	    res.status(200).json({sentiment});
+        res.status(200).json({sentiment});
     }
-    
+
     // handles if no text or incorrect type
     if (
         !text
