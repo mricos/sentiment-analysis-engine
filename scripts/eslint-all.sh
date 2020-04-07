@@ -1,2 +1,3 @@
 ./node_modules/.bin/eslint index.js \
-./bin
+./bin \
+./routes/nlp.js
