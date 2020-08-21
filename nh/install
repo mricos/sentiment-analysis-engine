@@ -1,4 +1,5 @@
 #!/bin/bash
 pkgdir=/home/sae/sae-app/
 cmd=/snap/bin/npm
+cd $pkgdir
 $cmd install $pkgdir
