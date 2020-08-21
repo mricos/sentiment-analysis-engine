@@ -1,0 +1,11 @@
+dir=$(dirname $BASH_SOURCE)
+>&2 echo "Status for  $dir:
+PWD: $PWD
+BASH_SOURCE: $BASH_SOURCE
+dir: $dir
+with PID: $(cat $dir/pid)
+Tail of $dir/log:
+$(tail $dir/log)
+Tail of $dir/err:
+$(tail $dir/err)
+"

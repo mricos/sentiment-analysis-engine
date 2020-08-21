@@ -1,0 +1,11 @@
+#!/bin/bash
+cwd=/home/nhw/dummy/nh
+cmd=/bin/bash
+args=app.sh
+daemonize \
+	-E PORT=$(cat $cwd/port) \
+        -c $cwd \
+        -p $cwd/pid \
+        -e $cwd/err \
+        -o $cwd/log \
+        "$cmd" "$args"
