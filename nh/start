@@ -1,7 +1,9 @@
 #!/bin/bash
-cwd=/home/nhw/dummy/nh
-cmd=/bin/bash
-args=app.sh
+#cwd=/home/sae/sae-app/bin
+cwd=/home/sae/sae-app/nh
+#cmd=/usr/bin/node
+cmd=/snap/bin/node
+args=../bin/www.js
 daemonize \
 	-E PORT=$(cat $cwd/port) \
         -c $cwd \
