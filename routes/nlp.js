@@ -23,7 +23,21 @@ router.post("/s-analyzer", function(req, res, next) {
         === "string"
         ? req.body.language
         : false;
+    const data = typeof(req.body.data)
+	=== "object" && Array.isArray(req.body.data)
+	? req.body.language
+	: false;
+
     if (
+        key
+        && language
+	&& data
+    ) {
+
+	console.log("Testing");
+        console.log(data);
+    
+    } else if (
         text
         && key
         && language
