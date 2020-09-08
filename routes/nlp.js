@@ -29,14 +29,11 @@ router.post("/s-analyzer", function(req, res, next) {
 	: false;
 
     if (
-        key
-        && language
+	key 
 	&& data
     ) {
-
 	console.log("Testing");
         console.log(data);
-    
     } else if (
         text
         && key
