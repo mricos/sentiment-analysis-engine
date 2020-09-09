@@ -17,8 +17,8 @@ const app = express();
 // console.log("Here is dirname: ", __dirname);
 
 app.use(logger("dev"));
-app.use(express.json());
-app.use(express.urlencoded({extended: false}));
+app.use(express.json({limit: "25mb"}));
+app.use(express.urlencoded({limit: "25mb", extended: false}));
 app.use(cookieParser());
 // app.use(express.static(path.join(__dirname, "public")));
 
