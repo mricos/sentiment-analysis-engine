@@ -14,7 +14,7 @@ spellCorrector.loadDictionary();
 
 router.post("/analyze/sentiment", function(req, res, next) {
     console.log("Made it to post.");
-    console.log("Here is req.body[0]:", req.body[0]);
+    console.log("Here is req.body:", req.body);
 
     /*const text = typeof(req.body.text)
         === "string" && req.body.text.length > 0
