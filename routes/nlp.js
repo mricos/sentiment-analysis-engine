@@ -12,9 +12,9 @@ spellCorrector.loadDictionary();
 
 // String[] -> Sentiment[] 
 
-router.post("/analyze", function(req, res, next) {
-    console.log("Made it to post.");
-    console.log("Here is req.body:", req.body);
+router.post("/analyze/sentiment", function(req, res, next) {
+    console.log("POSTed data:", req.body[0]);
+    res.status(200).json({response: req.body[0]});
 
     /*const text = typeof(req.body.text)
         === "string" && req.body.text.length > 0
