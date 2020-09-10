@@ -29,5 +29,5 @@ export default function(text) {
             "afinn"
         );
         const sentiment = analyzer.getSentiment(filteredReview);
-        return sentiment; 
+        return sentiment.toFixed(4); 
 }
