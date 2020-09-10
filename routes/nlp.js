@@ -10,8 +10,13 @@ const router = express.Router();
 const spellCorrector = new SpellCorrector();
 spellCorrector.loadDictionary();
 
-router.post("/s-analyzer", function(req, res, next) {
-    const text = typeof(req.body.text)
+// String[] -> Sentiment[] 
+
+router.post("/analyze/sentiment", function(req, res, next) {
+    console.log("Made it to post.");
+    console.log("Here is req.body[0]:", req.body[0]);
+
+    /*const text = typeof(req.body.text)
         === "string" && req.body.text.length > 0
         ? req.body.text
         : false;
@@ -75,6 +80,7 @@ router.post("/s-analyzer", function(req, res, next) {
             "error": "Please, provide text to analyze."
         });
     }
+    */
 });
 
 export default router;
