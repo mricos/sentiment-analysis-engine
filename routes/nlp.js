@@ -1,4 +1,5 @@
 import express from "express";
+import createSentiments from "./utils/create-sentiments.js";
 
 const router = express.Router();
 
