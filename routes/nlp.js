@@ -12,7 +12,7 @@ spellCorrector.loadDictionary();
 
 // String[] -> Sentiment[] 
 
-router.post("/analyze/sentiment", function(req, res, next) {
+router.post("/analyze", function(req, res, next) {
     console.log("Made it to post.");
     console.log("Here is req.body:", req.body);
 
