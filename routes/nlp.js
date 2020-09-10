@@ -1,86 +1,31 @@
 import express from "express";
-import aposToLexForm from "apos-to-lex-form";
-import natural from "natural";
-
-import SpellCorrector from "spelling-corrector";
-import sw from "stopword";
 
 const router = express.Router();
-
-const spellCorrector = new SpellCorrector();
-spellCorrector.loadDictionary();
 
 // String[] -> Sentiment[] 
 
 router.post("/analyze/sentiment", function(req, res, next) {
-    console.log("POSTed data:", req.body);
-    res.status(200).json({response: req.body});
 
-    /*const text = typeof(req.body.text)
-        === "string" && req.body.text.length > 0
-        ? req.body.text
-        : false;
-    const key = typeof(req.body.key)
-        === "string"
-        ? req.body.key
-        : false;
-    const language = typeof(req.body.language)
-        === "string"
-        ? req.body.language
-        : false;
-    const data = typeof(req.body.data)
-	=== "object" && Array.isArray(req.body.data)
-	? req.body.language
-	: false;
+    const dataToAnalyze = 
+        typeof(req.body) === "object" 
+	&& Array.isArray(req.body) 
+	&& req.body.length
+	    ? req.body
+	    : false;
 
-    if (
-	key 
-	&& data
-    ) {
-	console.log("Testing");
-        console.log(data);
-    } else if (
-        text
-        && key
-        && language
-    ) {
-        const lexedReview = aposToLexForm(text);
-        const casedReview = lexedReview.toLowerCase();
-        const alphaOnlyReview = casedReview
-            .replace(/[^a-zA-Z\s]+/g, "");
-        const {WordTokenizer} = natural;
-        const tokenizer = new WordTokenizer();
-        const tokenizedReview = tokenizer
-            .tokenize(alphaOnlyReview);
-
-        tokenizedReview.forEach(function(word, index) {
-            tokenizedReview[index] = spellCorrector.correct(word);
-        });
-
-        const filteredReview = sw.removeStopwords(tokenizedReview);
-
-        const {SentimentAnalyzer, PorterStemmer} = natural;
-        const analyzer = new SentimentAnalyzer(
-            "English",
-            PorterStemmer,
-            "afinn"
-        );
-        const sentiment = analyzer.getSentiment(filteredReview);
-
-        res.status(200).json({sentiment});
-    }
-
-    // handles if no text or incorrect type
-    if (
-        !text
-        && key
-        && language
-    ) {
+    // if there's an array of data to analyze
+    if (dataToAnalyze) {
+        
+	const sentiments = dataToAnalyze.map(createSentiments);
+        
+	res.status(200).json(sentiments);
+    
+    } else {
         res.status(400).json({
-            "error": "Please, provide text to analyze."
-        });
+	    message: "Incorrect data type or no data submitted."
+	});    
     }
-    */
+        
 });
 
 export default router;
