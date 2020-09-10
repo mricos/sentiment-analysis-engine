@@ -10,6 +10,7 @@ import logger from "morgan";
 
 import indexRouter from "./routes/index.js";
 import nlpRouter from "./routes/nlp.js";
+import testRouter from "./routes/tests.js";
 
 const app = express();
 // const __dirname = dirname(fileURLToPath(import.meta.url));
@@ -24,5 +25,6 @@ app.use(cookieParser());
 
 app.use("/", indexRouter);
 app.use("/api/nlp", nlpRouter);
+app.use("/api/nlp/test", testRouter);
 
 export default Object.freeze(app);
