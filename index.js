@@ -25,6 +25,6 @@ app.use(cookieParser());
 
 app.use("/", indexRouter);
 app.use("/api/nlp", nlpRouter);
-app.use("/api/nlp/test", testRouter);
+app.use("/api/test", testRouter);
 
 export default Object.freeze(app);
