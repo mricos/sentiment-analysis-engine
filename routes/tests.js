@@ -3,8 +3,7 @@ import createSentiments from "./utils/create-sentiments.js";
 
 const router = express.Router();
 
-// String[] -> Sentiment[] 
-
+// api/test/empty-array
 router.post("/empty-array", function (req, res, next) {
     console.time("Empty Array Test");
     const received = 
@@ -21,8 +20,9 @@ router.post("/empty-array", function (req, res, next) {
     }
 });
 
+// api/test/analyze/sentiment
 router.post("/analyze/sentiment", function(req, res, next) {
-
+    console.time(`Sentiment Analysis of Array of length ${req.body.length}`);
     const dataToAnalyze = 
         typeof(req.body) === "object" 
 	&& Array.isArray(req.body) 
@@ -34,7 +34,7 @@ router.post("/analyze/sentiment", function(req, res, next) {
     if (dataToAnalyze) {
         
 	const sentiments = dataToAnalyze.map(createSentiments);
-        
+        console.timeEnd();        
 	res.status(200).json(sentiments);
     
     } else {
@@ -42,7 +42,7 @@ router.post("/analyze/sentiment", function(req, res, next) {
 	    message: "Incorrect data type or no data submitted."
 	});    
     }
-        
+
 });
 
 export default router;
