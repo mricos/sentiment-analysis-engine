@@ -34,7 +34,7 @@ router.post("/analyze/sentiment", function(req, res, next) {
     if (dataToAnalyze) {
         
 	const sentiments = dataToAnalyze.map(createSentiments);
-        console.timeEnd();        
+        console.timeEnd(`Sentiment Analysis of Array of length ${req.body.length}`);        
 	res.status(200).json(sentiments);
     
     } else {
