@@ -38,7 +38,7 @@ router.post("/analyze/sentiment", function(req, res, next) {
 	            currentSentiments[id] = {sentiments};
 
 	            fs.writeFile(
-	                "../data/sentiments.json", 
+	                "./data/sentiments.json", 
 			currentSentiments,
 		        function(err) {
 			    if (err) throw err;
