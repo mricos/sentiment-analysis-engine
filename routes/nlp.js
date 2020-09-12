@@ -3,23 +3,40 @@ import createSentiments from "./utils/create-sentiments.js";
 
 const router = express.Router();
 
-// String[] -> Sentiment[] 
-
 router.post("/analyze/sentiment", function(req, res, next) {
 
     const dataToAnalyze = 
         typeof(req.body) === "object" 
-	&& Array.isArray(req.body) 
-	&& req.body.length
-	    ? req.body
+	&& req.body.hasOwnProperty("text")
+	    ? req.body.text
 	    : false;
 
-    // if there's an array of data to analyze
+    // if there's data to analyze
     if (dataToAnalyze) {
-        
-	const sentiments = dataToAnalyze.map(createSentiments);
-        
-	res.status(200).json(sentiments);
+        // if the data comes in the form of an array
+	if (Array.isArray(dataToAnalyze)) {
+            	
+	    const sentiments = dataToAnalyze.map(createSentiments);
+	    
+	    res.status(200).json({
+		timestamp: new Date(),    
+	        sentiment: sentiments
+	    });
+	
+	} else if (typeof(dataToAnalyze) === "string") {
+	    
+	    const sentiment = createSentiments(dataToAnalyze);
+	    
+	    res.status(200).json({
+	        timestamp: new Date(),
+		sentiment
+	    });
+	
+	} else {
+	    res.status(400).json({
+	        message: "Incorrect data type provided."
+	    });
+	}
     
     } else {
         res.status(400).json({
