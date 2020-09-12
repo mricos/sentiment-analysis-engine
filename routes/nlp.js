@@ -1,4 +1,5 @@
 import express from "express";
+import fs from "fs";
 import createSentiments from "./utils/create-sentiments.js";
 
 const router = express.Router();
@@ -18,14 +19,39 @@ router.post("/analyze/sentiment", function(req, res, next) {
 
 	// if the data comes in the form of an array
 	if (Array.isArray(dataToAnalyze)) {
-            	
+
 	    const sentiments = dataToAnalyze.map(createSentiments);
-	    
-	    res.status(200).json({
-		timestamp: new Date(),    
-	        sentiment: sentiments
-	    });
 	
+	    fs.readFile(
+		"./data/sentiments.json",
+	        function(err, data) {
+	            if (err) throw err;
+		    
+	            const currentSentiments = JSON.parse(data);
+	            const id = Date.now();
+		    console.log(
+	                "read file. currentSentiments: ", 
+			currentSentiments
+		    );
+		    console.log("id: ", id);
+		    
+	            currentSentiments[id] = {sentiments};
+
+	            fs.writeFile(
+	                "../data/sentiments.json", 
+			currentSentiments,
+		        function(err) {
+			    if (err) throw err;
+                            console.log("../data/sentiments.json written to")
+
+                            res.status(200).json({
+                                id
+                            });
+			}
+		    )
+		}
+	    );
+
 	} else if (typeof(dataToAnalyze) === "string") {
 	    
 	    const sentiment = createSentiments(dataToAnalyze);
