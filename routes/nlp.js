@@ -1,8 +1,9 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
+const {dirname} = path;
 import createSentiments from "./utils/create-sentiments.js";
-
+import {fileURLToPath} from "url";
 const router = express.Router();
 const __dirname = dirname(fileURLToPath(import.meta.url));
 
