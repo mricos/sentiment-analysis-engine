@@ -1,5 +1,5 @@
 import express from "express";
-import createSentiments from "./utils/create-sentiments.js";
+import analyzeSentiments from "./utils/analyze-sentiments.js";
 
 const router = express.Router();
 
@@ -33,7 +33,7 @@ router.post("/analyze/sentiment", function(req, res, next) {
     // if there's an array of data to analyze
     if (dataToAnalyze) {
         
-	const sentiments = dataToAnalyze.map(createSentiments);
+	const sentiments = dataToAnalyze.map(analyzeSentiments);
         console.timeEnd(`Sentiment Analysis of Array of length ${req.body.length}`);        
 	res.status(200).json(sentiments);
     
