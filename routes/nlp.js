@@ -1,5 +1,6 @@
 import express from "express";
 import fs from "fs";
+import path from "path";
 import createSentiments from "./utils/create-sentiments.js";
 
 const router = express.Router();
@@ -21,9 +22,10 @@ router.post("/analyze/sentiment", function(req, res, next) {
 	if (Array.isArray(dataToAnalyze)) {
 
 	    const sentiments = dataToAnalyze.map(createSentiments);
-	
+	    const pathToDb = path.join(__dirname, "data/sentiments.json");
+	    console.log("Path to db: ", pathToDb);
 	    fs.readFile(
-		"./data/sentiments.json",
+		pathToDb,
 	        function(err, data) {
 	            if (err) throw err;
 		    
@@ -38,7 +40,7 @@ router.post("/analyze/sentiment", function(req, res, next) {
 	            currentSentiments[id] = {sentiments};
 
 	            fs.writeFile(
-	                "./data/sentiments.json", 
+			pathToDb,
 			currentSentiments,
 		        function(err) {
 			    if (err) throw err;
