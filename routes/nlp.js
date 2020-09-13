@@ -4,6 +4,7 @@ import path from "path";
 import createSentiments from "./utils/create-sentiments.js";
 
 const router = express.Router();
+const __dirname = dirname(fileURLToPath(import.meta.url));
 
 router.post("/analyze/sentiment", function(req, res, next) {
 
