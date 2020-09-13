@@ -22,12 +22,13 @@ router.get("/analyze/sentiment/:id", function (req, res, next) {
 	        const sentiments = db[id];
 
 		if (sentiments) {
+		    // Update database
 		    delete db[id];
-		
+		    const refreshedDb = JSON.stringify(db);
 		    // Write to database with update
 		    fs.writeFile(
 			PATHTODB,
-			db,
+			refreshedDb,
 		        function(err) {
 			    if (err) throw err;
                             res.status(200).json({
@@ -35,7 +36,6 @@ router.get("/analyze/sentiment/:id", function (req, res, next) {
                             });
 			}
 		    )
-
 	            res.status(200).json(sentiments);
 		} else {
 		    res.status(400).json({message: `Id ${id} not found.`});
