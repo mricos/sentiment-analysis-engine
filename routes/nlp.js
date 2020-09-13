@@ -31,12 +31,11 @@ router.get("/analyze/sentiment/:id", function (req, res, next) {
 			refreshedDb,
 		        function(err) {
 			    if (err) throw err;
-                            res.status(200).json({
-                                id
-                            });
 			}
 		    )
-	            res.status(200).json(sentiments);
+	
+		    res.status(200).json(sentiments);
+			
 		} else {
 		    res.status(400).json({message: `Id ${id} not found.`});
 		}
