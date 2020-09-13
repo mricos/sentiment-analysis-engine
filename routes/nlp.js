@@ -15,7 +15,7 @@ router.post("/analyze/sentiment", function(req, res, next) {
 	    ? req.body.text
 	    : false;
 
-    console.log("Here is the data: ", dataToAnalyze);
+    console.log("Here is the data from POST: ", dataToAnalyze);
 
     // if there's data to analyze
     if (dataToAnalyze) {
@@ -24,7 +24,7 @@ router.post("/analyze/sentiment", function(req, res, next) {
 	if (Array.isArray(dataToAnalyze)) {
 
 	    const sentiments = dataToAnalyze.map(createSentiments);
-	    const pathToDb = path.join(__dirname, "data/sentiments.json");
+	    const pathToDb = path.join(__dirname, "../data/sentiments.json");
 	    console.log("Path to db: ", pathToDb);
 	    fs.readFile(
 		pathToDb,
@@ -47,8 +47,6 @@ router.post("/analyze/sentiment", function(req, res, next) {
 			refreshedDb,
 		        function(err) {
 			    if (err) throw err;
-                            console.log("../data/sentiments.json written to")
-
                             res.status(200).json({
                                 id
                             });
