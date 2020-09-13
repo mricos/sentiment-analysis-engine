@@ -27,7 +27,7 @@ router.get("/analyze/sentiment/:id", function (req, res, next) {
 		    // Write to database with update
 		    fs.writeFile(
 			PATHTODB,
-			db
+			db,
 		        function(err) {
 			    if (err) throw err;
                             res.status(200).json({
