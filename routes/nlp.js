@@ -40,10 +40,11 @@ router.post("/analyze/sentiment", function(req, res, next) {
 		    console.log("id: ", id);
 		    
 	            currentSentiments[id] = {sentiments};
-
-	            fs.writeFile(
+		    const refreshedDb = currentSentiments.stringify();
+	            
+		    fs.writeFile(
 			pathToDb,
-			currentSentiments,
+			refreshedDb,
 		        function(err) {
 			    if (err) throw err;
                             console.log("../data/sentiments.json written to")
