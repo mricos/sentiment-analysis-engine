@@ -3,13 +3,19 @@ sae-parse-file() {
 }
 
 sae-post-data() {
-    curl -X POST \
+    local ip="$1";
+    local port="$2";
+    local path="$3"
+    curl -s -X POST \
     -H "Content-Type: application/json" \
     -d @- \
-    "157.245.233.116:1025/api/nlp/analyze/sentiment"
+    "$ip:$port$path"
 }
 
 sae-get-data-with-id() {
-    local id="$1";
-    curl "157.245.233.116:1025/api/nlp/analyze/sentiment/$id"
+    local ip="$1";
+    local port="$2";
+    local path="$3";
+    local id="$4";
+    curl -s "$ip:$port$path/$id"
 }

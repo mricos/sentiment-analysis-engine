@@ -1,0 +1,37 @@
+POST array to API
+ID received for array data: 1600147380644
+
+GET sentiments for array:1600147380644
+Sentiments for array: [
+  "3.0000",
+  "-3.0000",
+  "0.0000"
+]
+
+GET original data for array:1600147380644
+Original array data for array:1600147380644
+[
+  "good",
+  "bad",
+  "neutral"
+]
+
+
+
+POST string to API
+ID received for string data: 1600147380880
+
+GET sentiment for string:1600147380880
+Sentiment for string: [
+  "3.0000",
+  "-3.0000",
+  "0.0000"
+]
+
+GET original data for string:1600147380880
+Original string data for string:1600147380880
+[
+  "good",
+  "bad",
+  "neutral"
+]
