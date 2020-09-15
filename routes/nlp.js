@@ -1,7 +1,7 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
-import { getId } from "./utils/handler.js";
+import { getId, postData } from "./utils/handler.js";
 const { dirname } = path;
 import analyzeSentiments from "./utils/analyze-sentiments.js";
 import { fileURLToPath } from "url";
@@ -15,7 +15,7 @@ const PATH_TO_ORIGINAL = path.join(__dirname, "../data/original.json")
 
 
 router.get("/data/:id", function (req, res, next) {
-    
+    // if id is datatype number, use it as a string. Otherwise reject    
     const id = Number(req.params.id) ? req.params.id : false;
     
     if (id) {
@@ -30,7 +30,7 @@ router.get("/data/:id", function (req, res, next) {
 });
 
 router.get("/analyze/sentiment/:id", function (req, res, next) {
-    
+    // if id is datatype number, use it as a string. Otherwise reject
     const id = Number(req.params.id) ? req.params.id : false;
 
     if (id) {
@@ -63,6 +63,31 @@ router.post("/analyze/sentiment", function(req, res, next) {
 
 	    const sentiments = dataToAnalyze.map(analyzeSentiments);
 	    
+            postData(
+	        PATH_TO_ORIGINAL,
+		id,
+                {data: dataToAnalyze},
+		function(id) {
+		    console.log(
+		        `ID ${id} data preserved in /data/original.json`
+		    );
+		}
+	    );
+
+	    postData(
+	        PATH_TO_SENTIMENTS,
+		id,
+                { sentiments },
+                function(response, id) {
+		    console.log(`ID ${id} sent to client.`);
+	            console.log("Analysis successful.");
+                    response.status(200).json({
+                        id
+                    });
+		},
+		res
+	    );
+            /*
 	    fs.readFile(
 	        PATH_TO_ORIGINAL,
 		function(err, data) {
@@ -83,7 +108,7 @@ router.post("/analyze/sentiment", function(req, res, next) {
 		        function(err) {
 			    if (err) throw err;
 		            console.log(
-			        `ID ${id} preserved in /data/original.json`
+			        `ID ${id} data preserved in /data/original.json`
 			    );
 			}
 		    );
@@ -114,6 +139,7 @@ router.post("/analyze/sentiment", function(req, res, next) {
 		    );
 		}
 	    );
+	    */
 
 	} else if (typeof(dataToAnalyze) === "string") {
 	    
