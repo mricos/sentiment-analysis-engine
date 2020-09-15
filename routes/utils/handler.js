@@ -1,10 +1,7 @@
 import { readFile, writeFile } from "fs";
 
-export default {
-    getId
-}
 
-function getId(path, id, response) {
+export function getId(path, id, response) {
     readFile(
         path,
 	function(err, data) {
