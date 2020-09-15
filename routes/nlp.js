@@ -10,40 +10,42 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 const PATH_TO_SENTIMENTS = path.join(__dirname, "../data/sentiments.json");
 const PATH_TO_ORIGINAL = path.join(__dirname, "../data/original.json")
 // Possible refactor: PATH_TO_SENTIMENTS = process.env.PATH_TO_SENTIMENTS;
-// nh/env
+// nh/env - will need for jwt?
 
-// /data/:id GET for original data stored in separate json file
+function handleGetId(path, id, response) {
+    fs.readFile(
+        path,
+	function(err, data) {
+	    if (err) throw err;
+            const db = JSON.parse(data);
+	    const item = db[id];
+            if (item) {
+		// Update database
+		delete db[id];
+		const refreshedDb = JSON.stringify(db);
+		// Write to database with update
+		fs.writeFile(
+		    path,
+		    refreshedDb,
+		    function(err) {
+		        if (err) throw err;
+		        response.status(200).json(item);
+		    }
+		);
+	
+             } else {
+	         response.status(400).json({message: `Id ${id} not found.`});
+	     }
+	 }
+    );   
+}
+
 
 router.get("/data/:id", function (req, res, next) {
     const id = Number(req.params.id) ? req.params.id : false;
     
     if (id) {
-        fs.readFile(
-            PATH_TO_ORIGINAL,
-	    function(err, data) {
-	        if (err) throw err;
-                const db = JSON.parse(data);
-	        const original = db[id];
-
-		if (original) {
-		    // Update database
-		    delete db[id];
-		    const refreshedDb = JSON.stringify(db);
-		    // Write to database with update
-		    fs.writeFile(
-			PATH_TO_ORIGINAL,
-			refreshedDb,
-		        function(err) {
-			    if (err) throw err;
-		            res.status(200).json(original);
-			}
-		    )
-	
-		} else {
-		    res.status(400).json({message: `Id ${id} not found.`});
-		}
-	    }
-        );
+       handleGetId(PATH_TO_ORIGINAL, id, res); 
     } else {
         res.status(400).json({message: "Please, provide id."})
     }
