@@ -16,21 +16,21 @@ export function postData(path, id, value, callback, response) {
             // in order to write to file
             const refreshedDb = JSON.stringify(db);
 
-			// Write to database with update
-			fs.writeFile(
-				path,
-				refreshedDb,
-				function(err) {
-					if (err) throw err;
-					if (response) {
-						callback(response, id);
-					} else {
-						callback(id);
-					}
-				}
-			);
+	    // Write to database with update
+	    writeFile(
+		path,
+		refreshedDb,
+		function(err) {
+	            if (err) throw err;
+		    if (response) {
+			callback(response, id);
+		    } else {
+			callback(id);
+		    }
 		}
-	);
+	    );
+	}
+    );
 }
 
 export function getId(path, id, response) {
