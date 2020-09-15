@@ -23,8 +23,10 @@ export function postData(path, id, value, callback, response) {
 		function(err) {
 	            if (err) throw err;
 		    if (response) {
+			// send id on response
 			callback(response, id);
 		    } else {
+			// log id information
 			callback(id);
 		    }
 		}
@@ -38,11 +40,16 @@ export function getId(path, id, response) {
         path,
 	function(err, data) {
 	    if (err) throw err;
+            // parse to object from string
             const db = JSON.parse(data);
+	    // capture value from db
 	    const item = db[id];
+
             if (item) {
 		// Update database
+		// delete key:value
 		delete db[id];
+		// Transform object to string to write to file
 		const refreshedDb = JSON.stringify(db);
 		// Write to database with update
 		writeFile(
