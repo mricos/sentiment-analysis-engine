@@ -63,89 +63,47 @@ router.post("/analyze/sentiment", function(req, res, next) {
 
 	    const sentiments = dataToAnalyze.map(analyzeSentiments);
 	    
-            postData(
+        postData(
 	        PATH_TO_ORIGINAL,
-		id,
-                {data: dataToAnalyze},
-		function(id) {
-		    console.log(
-		        `ID ${id} data preserved in /data/original.json`
-		    );
-		}
+		    id,
+            {data: dataToAnalyze},
+			function(id) {
+		    	console.log(
+		        	`ID ${id} data preserved in /data/original.json`
+		    	);
+			}
 	    );
 
 	    postData(
 	        PATH_TO_SENTIMENTS,
-		id,
-                { sentiments },
-                function(response, id) {
-		    console.log(`ID ${id} sent to client.`);
+			id,
+            { sentiments },
+            function(response, id) {
+		    	console.log(`ID ${id} sent to client.`);
 	            console.log("Analysis successful.");
-                    response.status(200).json({
-                        id
-                    });
-		},
-		res
+                response.status(200).json({
+                    id
+                });
+			},
+			res
 	    );
-            /*
-	    fs.readFile(
-	        PATH_TO_ORIGINAL,
-		function(err, data) {
-		    if (err) throw err;
-
-		    // Pull object database from file
-		    const db = JSON.parse(data);
-		    // Create new key of id with value
-		    db[id] = {data: dataToAnalyze};
-		    // Transform the object back into a string
-		    // in order to write to file
-		    const refreshedDb = JSON.stringify(db);
-
-		    // Write to database with update
-		    fs.writeFile(
-			PATH_TO_ORIGINAL,
-			refreshedDb,
-		        function(err) {
-			    if (err) throw err;
-		            console.log(
-			        `ID ${id} data preserved in /data/original.json`
-			    );
-			}
-		    );
-		}
-	    );
-            	    
-	    fs.readFile(
-		PATH_TO_SENTIMENTS,
-	        function(err, data) {
-	            if (err) throw err;
-		    // Pull object database from file	    
-	            const db = JSON.parse(data);
-		    // Update database
-	            db[id] = {sentiments};
-		    const refreshedDb = JSON.stringify(db);
-	            // Write to database with update
-		    fs.writeFile(
-			PATH_TO_SENTIMENTS,
-			refreshedDb,
-		        function(err) {
-			    if (err) throw err;
-			    console.log(`ID ${id} sent to client.`);
-			    console.log("Analysis successful.");
-                            res.status(200).json({
-                                id
-                            });
-			}
-		    );
-		}
-	    );
-	    */
 
 	} else if (typeof(dataToAnalyze) === "string") {
 	    
 	    const sentiments = analyzeSentiments(dataToAnalyze);
-
-	    fs.readFile(
+            
+	    postData(
+	        PATH_TO_ORIGINAL,
+			id,
+			{data: dataToAnalyze},
+        	function (id) {
+				console.log(
+			        `ID ${id} data preserved in /data/original.json`
+			    );
+			}
+	    );
+	    
+		/*fs.readFile(
 	        PATH_TO_ORIGINAL,
 		function(err, data) {
 		    if (err) throw err;
@@ -171,7 +129,23 @@ router.post("/analyze/sentiment", function(req, res, next) {
 		    );
 		}
 	    );
-	    
+		*/
+
+	    postData(
+			PATH_TO_SENTIMENTS,
+            id,
+		    { sentiments },
+			function(response, id) {
+		    	console.log(`ID ${id} sent to client.`);
+	            console.log("Analysis successful.");
+                response.status(200).json({
+                    id
+                });
+			},
+			res
+		);
+
+		/*
 	    fs.readFile(
 		PATH_TO_SENTIMENTS,
 	        function(err, data) {
@@ -194,18 +168,18 @@ router.post("/analyze/sentiment", function(req, res, next) {
 			}
 		    )
 		}
-	    );
+	    );*/
 	
-	} else {
-	    res.status(400).json({
-	        message: "Incorrect data type provided."
-	    });
-	}
+	    } else {
+	        res.status(400).json({
+	            message: "Incorrect data type provided."
+	        });
+	    }
     
     } else {
         res.status(400).json({
-	    message: "Incorrect data type or no data submitted."
-	});    
+	        message: "Incorrect data type or no data submitted."
+	    });    
     }
         
 });
