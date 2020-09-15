@@ -1,6 +1,7 @@
 import express from "express";
 import fs from "fs";
 import path from "path";
+import { getId } from "./utils/handler.js";
 const { dirname } = path;
 import analyzeSentiments from "./utils/analyze-sentiments.js";
 import { fileURLToPath } from "url";
@@ -12,42 +13,19 @@ const PATH_TO_ORIGINAL = path.join(__dirname, "../data/original.json")
 // Possible refactor: PATH_TO_SENTIMENTS = process.env.PATH_TO_SENTIMENTS;
 // nh/env - will need for jwt?
 
-function handleGetId(path, id, response) {
-    fs.readFile(
-        path,
-	function(err, data) {
-	    if (err) throw err;
-            const db = JSON.parse(data);
-	    const item = db[id];
-            if (item) {
-		// Update database
-		delete db[id];
-		const refreshedDb = JSON.stringify(db);
-		// Write to database with update
-		fs.writeFile(
-		    path,
-		    refreshedDb,
-		    function(err) {
-		        if (err) throw err;
-		        response.status(200).json(item);
-		    }
-		);
-	
-             } else {
-	         response.status(400).json({message: `Id ${id} not found.`});
-	     }
-	 }
-    );   
-}
-
 
 router.get("/data/:id", function (req, res, next) {
+    
     const id = Number(req.params.id) ? req.params.id : false;
     
     if (id) {
-       handleGetId(PATH_TO_ORIGINAL, id, res); 
+        // handles 200 and 404 not found
+        getId(PATH_TO_ORIGINAL, id, res); 
+    
     } else {
+      
         res.status(400).json({message: "Please, provide id."})
+    
     }
 });
 
@@ -56,35 +34,13 @@ router.get("/analyze/sentiment/:id", function (req, res, next) {
     const id = Number(req.params.id) ? req.params.id : false;
 
     if (id) {
-        fs.readFile(
-            PATH_TO_SENTIMENTS,
-	    function(err, data) {
-	        if (err) throw err;
-                const db = JSON.parse(data);
-	        const sentiments = db[id];
-
-		if (sentiments) {
-		    // Update database
-		    delete db[id];
-		    const refreshedDb = JSON.stringify(db);
-		    // Write to database with update
-		    fs.writeFile(
-			PATH_TO_SENTIMENTS,
-			refreshedDb,
-		        function(err) {
-			    if (err) throw err;
-		            res.status(200).json(sentiments);
-			}
-		    )
-	
-		} else {
-		    res.status(400).json({message: `Id ${id} not found.`});
-		}
-	    }
-        );
+        // handles 200 and 404 not found
+	getId(PATH_TO_SENTIMENTS, id, res);
 
     } else {
+        
         res.status(400).json({message: "Please, provide id."})
+    
     }
 });
 
