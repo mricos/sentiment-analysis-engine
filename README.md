@@ -5,23 +5,73 @@ Provides positive, negative, or neutral classification for a sample of  English 
 Current version is based off of [Natural](https://github.com/NaturalNode/natural), the node-based NLP library.
 
 ## API
+Summary
 
-Text[] -> Sentiment[]
+Text -> Id
+Id -> Sentiment
+Id -> Text
 
-To query the API
+
+To request analysis from the API
+POST 
+/api/nlp/analyze/sentiment
+
+
+Request
 ```js
-[
-    "Text to analyze the sentiment of"
-]
+{
+    text: String|String[] 
+}
+
 ```
 
 Response
 ```js
-[
-    Float String Sentiment
-    e.g. "1.3333"     
-]
+{
+    id: ID
+}
+
 ```
+
+
+To request finished analysis
+POST 
+/api/nlp/analyze/sentiment/:id
+
+Request
+```js
+{
+    id: ID
+}
+```
+
+Response
+```js
+{
+    sentiment: Sentiment|Sentiment[]        
+}
+```
+
+
+To request original data
+POST
+/api/nlp/data/:id
+
+Request
+```js
+{
+    id: ID
+}
+```
+
+Response
+```js
+{
+    data: Text|Text[]        
+}
+```
+
+
 ## 12 Factors
 
 |Factor| Implementation Strategy|
