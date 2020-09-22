@@ -1,6 +1,30 @@
-#sae-parse-file() {
-#    jq . < "$1"
-#}
+sae-help() {
+    echo '
+        sae- functions serve to interact with Sentiment Analysis Engine,
+	and are used for testing purposes.
+
+	Functions:
+
+	sae-post-data $ip $port $path 
+	- Performs a POST request with data piped to it.
+	E.g. cat data.json | sae-post-data 123.456.78.910 80 /post-route
+
+
+	sae-get-data-with-id $ip $port $path $id
+	- Performs GET request to specified ip on port with path and id.
+	E.g. sae-get-data-with-id 123.456.78.910 80 /path 2
+
+
+	sae-parse-file $file $specified_property $from $to 
+	- Parses through a file of objects and places specified property values
+        into an array. You may specify the indices from n to nn. 
+        Function produces a data.sae file with a single object with a property 
+	of data with an array of the values specified. Function cats the file 
+        upon completion.
+        E.g. sae-parse-file file_of_objs.json text 0 10       
+
+    '
+}
 
 sae-post-data() {
     local ip="$1";
