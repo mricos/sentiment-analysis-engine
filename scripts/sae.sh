@@ -26,7 +26,7 @@ sae-parse-file() {
     jq '.' -s < $1 | jq '.[]."'$2'"' | jq '.['$3':'$4']' -s > data.$$
     data_for_sae="$(cat ./data.$$)"
 
-    echo '{"text": '"$data_for_sae"'}' > data.sae
+    echo '{"data": '"$data_for_sae"'}' > data.sae
     rm ./data.$$
     cat ./data.sae
 }

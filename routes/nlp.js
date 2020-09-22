@@ -48,9 +48,9 @@ router.post("/analyze/sentiment", function(req, res, next) {
 
     // check if data type is string or array
     const dataToAnalyze = 
-        typeof(req.body.text) === "string" 
-        || typeof(req.body.text) === "object" && Array.isArray(req.body.text)
-            ? req.body.text
+        typeof(req.body.data) === "string" 
+        || typeof(req.body.data) === "object" && Array.isArray(req.body.data)
+            ? req.body.data
             : false;
 
     // if there's data to analyze

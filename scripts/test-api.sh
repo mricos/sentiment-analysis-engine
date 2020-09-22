@@ -7,7 +7,7 @@ PORT=1025;
 DATA=/home/admin/src/sentiment-analysis-engine/data/biden-trump.tweetgen
 
 echo "POST array to API" >> test.results
-sae-parse-file $DATA text | sae-post-data $IP $PORT \
+sae-parse-file $DATA text 0 5 | sae-post-data $IP $PORT \
 	/api/nlp/analyze/sentiment > api.results
 array_id="$(jq '.id' < api.results)"
 echo -e "ID received for array data: $array_id\n" >> test.results
@@ -28,7 +28,7 @@ echo "$original_array" >> test.results
 echo -e "\n\n" >> test.results
 
 echo "POST string to API" >> test.results
-sae-parse-file $DATA text | sae-post-data $IP $PORT \
+sae-parse-file $DATA text 0 10 | sae-post-data $IP $PORT \
 	/api/nlp/analyze/sentiment > api.results
 string_id="$(jq '.id' < api.results)"
 echo -e "ID received for string data: $string_id\n" >> test.results
