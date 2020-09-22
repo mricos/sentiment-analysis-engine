@@ -55,6 +55,20 @@ router.post("/analyze/sentiment", function(req, res, next) {
 
     // if there's data to analyze
     if (dataToAnalyze) {
+        
+	const len = dataToAnalyze.length
+	    
+        if (Array.isArray(dataToAnalyze) && len > 50) {
+	    res.status(413)
+		.json({message: "Please, limit length of array to 50."});
+	    return;
+	} else if (typeof(dataToAnalyze) === "string" && len > 300) {
+	    res.status(413)
+		.json({
+		    message: "Please, limit length of string to 300 character."
+		});
+	    return;
+	} 
 
         // key in the key:value pair of id and data.
         const id = Date.now();
