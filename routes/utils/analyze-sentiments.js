@@ -7,6 +7,7 @@ const spellCorrector = new SpellCorrector();
 spellCorrector.loadDictionary();
 
 export default function(text) {
+	console.time("Sentiment Analysis");
         const lexedReview = aposToLexForm(text);
         const casedReview = lexedReview.toLowerCase();
         const alphaOnlyReview = casedReview
@@ -29,5 +30,6 @@ export default function(text) {
             "afinn"
         );
         const sentiment = analyzer.getSentiment(filteredReview);
+	console.timeEnd("Sentiment Analysis");
         return sentiment.toFixed(4); 
 }
