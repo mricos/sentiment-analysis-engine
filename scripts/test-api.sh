@@ -1,5 +1,6 @@
 # use: ./test-api.sh > test.results
 
+rm ./test.results
 source ./sae.sh
 
 IP=157.245.233.116;
@@ -46,11 +47,11 @@ original_string="$(jq '.data' < api.results)";
 echo "Original string data for string:$string_id" >> test.results
 echo "$original_string" >> test.results
 
-echo -e "\n\n" >> test.results
+echo -e "\n" >> test.results
 echo "POST an array above the length limit" >> test.results
 sae-parse-file $DATA text 0 52 | sae-post-data $IP $PORT \
 	/api/nlp/analyze/sentiment > api.results
-error_code="$(cat api.results)"
+error_code="$(jq '.message' < api.results)"
 echo "ERROR: $error_code" >> test.results
 
 rm api.results
