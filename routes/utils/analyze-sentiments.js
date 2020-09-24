@@ -7,8 +7,11 @@ const spellCorrector = new SpellCorrector();
 spellCorrector.loadDictionary();
 
 export default function(text) {
+	
+	// starts timing analysis
 	console.time("Sentiment Analysis");
-        const lexedReview = aposToLexForm(text);
+        
+	const lexedReview = aposToLexForm(text);
         const casedReview = lexedReview.toLowerCase();
         const alphaOnlyReview = casedReview
             .replace(/[^a-zA-Z\s]+/g, "");
@@ -30,6 +33,9 @@ export default function(text) {
             "afinn"
         );
         const sentiment = analyzer.getSentiment(filteredReview);
+	
+	// stops timer on analysis
 	console.timeEnd("Sentiment Analysis");
-        return sentiment.toFixed(4); 
+        
+	return sentiment.toFixed(4); 
 }
