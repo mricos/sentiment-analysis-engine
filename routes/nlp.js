@@ -9,7 +9,8 @@ const __dirname = dirname(fileURLToPath(import.meta.url));
 
 
 router.post("/", function(req, res, next) {
-    console.log("Here is the req.body", req.body);
+    const body = req.body;
+    res.status(200).json({ body });
 });
 
 export default router;
