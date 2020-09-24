@@ -5,7 +5,6 @@ import express from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
 
-import indexRouter from "./routes/index.js";
 import nlpRouter from "./routes/nlp.js";
 import testRouter from "./routes/tests.js";
 
