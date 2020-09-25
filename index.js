@@ -15,7 +15,12 @@ app.use(express.json({limit: "25mb"}));
 //app.use(express.urlencoded({limit: "25mb", extended: false}));
 app.use(cookieParser());
 
-app.use("/api/nlp", nlpRouter);
+function auth(req, res, next) {
+    console.log("req.headers.authorization: ", req.headers.authorization);
+    console.log("process.env.AUTH_KEY: ", process.env.AUTH_KEY);
+}
+
+app.use("/api/nlp", auth, nlpRouter);
 //app.use("/api/test", testRouter);
 
 export default Object.freeze(app);
