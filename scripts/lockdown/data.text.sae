@@ -1,9 +1,6 @@
 {
-"txId": "timestamp",
-"rxId": "notset",
-"action": "/api/nlp/analyze/sentiment",
+"reqHash": "first five tweets",
 "type": "text",
-
 "data": [
   "@GOP @realDonaldTrump And only Trump believers will take it",
   "RT @JackPosobiec: And there it is \n\nAtlantic Editor Concedes Central Claim Of Trump Hit Piece Could Be Wrong\nhttps://t.co/dwDhGX5zfl",
