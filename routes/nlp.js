@@ -56,6 +56,7 @@ router.post("/", function(req, res, next) {
 	&& reqHash
     ) {
 
+        const id = process.hrtime();
         const transformedData = 
             Array.isArray(data) 
 	        ? data.map(actionsLibrary[action])
@@ -68,8 +69,9 @@ router.post("/", function(req, res, next) {
         res.status(200).json({
 	    reqHash, 
 	    type: "transactionId",
-	    id: process.hrtime()
+	    id
 	});
+
     } else {
         res.status(422).json({
 	    message: "Request requires data (string or array of strings), type (string), action (string), and reqHash (string or number)"
