@@ -55,8 +55,10 @@ router.post("/", function(req, res, next) {
 	&& (type || action)
 	&& reqHash
     ) {
-
-        const id = process.hrtime();
+        // creates array of nanoseconds, 
+        // chooses second option, 
+	// turns to string
+        const id = process.hrtime()[1].toString();
         const transformedData = 
             Array.isArray(data) 
 	        ? data.map(actionsLibrary[action])
