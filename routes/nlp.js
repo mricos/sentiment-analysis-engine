@@ -18,6 +18,9 @@ const actionsLibrary = {
     "capitalize": text => text.toUpperCase()
 };
 
+const PATH_TO_SENTIMENTS = path.join(__dirname, "../data/sentiments");
+
+
 router.post("/", function(req, res, next) {
     
     // check if data type is string and if it's a type in the library
@@ -66,9 +69,23 @@ router.post("/", function(req, res, next) {
 		    ? actionsLibrary[action](data)
 	            : "Not correct data type";
 	
-	console.log("Here is the transformed data: ", transformedData);
-
-        res.status(200).json({
+	fs.writeFile(
+	    `${PATH_TO_SENTIMENTS}/${reqHash}.json`,
+	    JSON.stringify({
+	        reqHash, 
+		type: "sentiment", 
+		data: transformedData, 
+	    }),
+	    function (err, data) {
+	        if (err) {
+		    console.error(err);
+		} else {
+		    console.log("Data saved in file: ", data);
+		}
+	    }
+	)
+        
+	res.status(200).json({
 	    reqHash, 
 	    type: "transactionId",
 	    id
