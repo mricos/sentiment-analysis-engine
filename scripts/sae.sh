@@ -46,11 +46,39 @@ sae-get-data-with-id() {
 }
 
 
-sae-parse-file() {
-    jq '.' -s < $1 | jq '.[]."'$2'"' | jq '.['$3':'$4']' -s > data.$$
-    data_for_sae="$(cat ./data.$$)"
+sae-grab-values() {
+    local data="$(jq '.' -s | jq '.[]."'$1'"' | jq '.['$2':'$3']' -s)";
+    echo "$data"
+}
 
-    echo '{"data": '"$data_for_sae"'}' > data.sae
-    rm ./data.$$
-    cat ./data.sae
+sae-set-type() {
+    local type="$1";
+    local nano_hash="$(date +%N)";
+    local req_hash=${2:-$nano_hash};
+    local data="$(jq '{"type": "'"$type"'", "data": ., "reqHash": "'"$req_hash"'"}')";
+    echo "$data"
+}
+
+sae-specify-action() {
+    jq '. + {"action": "'"$1"'"}'
+}
+
+test-sae() {
+    cat /home/admin/src/sentiment-analysis-engine/data/biden-trump.tweetgen \
+    | sae-grab-values text 0 11 \
+    | sae-set-type text \
+    | sae-specify-action sentiment \
+    | sae-post-data 157.245.233.116 1025 /api/nlp
+}
+
+nstatus() {
+    nodeholder-app-status $doZ sae sentiment-analysis-engine
+}
+
+nstart() {
+    nodeholder-app-start $doZ sae sentiment-analysis-engine
+}
+
+nstop() {
+    nodeholder-app-stop $doZ sae sentiment-analysis-engine
 }
