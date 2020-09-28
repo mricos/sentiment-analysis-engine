@@ -15,7 +15,7 @@ function getSentiments(
     response
 ) {
     fs.readFile(
-        `path/${reqHash}.json`,
+        `${path}/${reqHash}.json`,
 	 function (err, data) {
 	     if (err) {
 	         console.error(err);
