@@ -41,8 +41,6 @@ const typesActionsLibrary = {
     transactionId: getSentiments
 };
 
-
-
 router.post("/", function(req, res, next) {
     
     // check if data type is string and if it's a type in the library
@@ -77,8 +75,7 @@ router.post("/", function(req, res, next) {
 
     // if the request body is constructed correctly
     if (
-        data
-	&& (type || action)
+	(type || action)
 	&& reqHash
     ) {
         // if type is text and action is sentiment
@@ -123,7 +120,7 @@ router.post("/", function(req, res, next) {
 		res
 	    );
 	} else {
-	
+            res.status(400).json({message: "Type or action is invalid."})	
 	}
 
     } else {
