@@ -7,18 +7,40 @@ const router = express.Router();
 import analyzeSentiments from "./utils/analyze-sentiments.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
-
-const typesLibrary = {
-    "text": true,
-    "transactionId": true
-};
-
-const actionsLibrary = {
-    "sentiment": analyzeSentiments,
-    "capitalize": text => text.toUpperCase()
-};
-
 const PATH_TO_SENTIMENTS = path.join(__dirname, "../data/sentiments");
+
+function getSentiments(
+    path,
+    reqHash,
+    response
+) {
+    fs.readFile(
+        `path/${reqHash}.json`,
+	 function (err, data) {
+	     if (err) {
+	         console.error(err);
+		 return;
+	     } else if (data) {
+	         const fileData = JSON.parse(data);
+		 response.status(200).json({
+		     reqHash: fileData.reqHash, 
+	             type: fileData.type, 
+	             data: fileData.data
+		 });
+	     } 
+	 }
+    );
+}
+
+// Specifies the allowed types and what actions may be performed
+const typesActionsLibrary = {
+    text: {
+        sentiment: analyzeSentiments,
+	capitalize: text => text.toUpperCase()
+    },
+    transactionId: getSentiments
+};
+
 
 
 router.post("/", function(req, res, next) {
@@ -27,7 +49,7 @@ router.post("/", function(req, res, next) {
     const type = 
         typeof(req.body.type) === "string" 
 	&& req.body.type.length > 0
-	&& typesLibrary[req.body.type]
+	&& typesActionsLibrary[req.body.type]
 	    ? req.body.type
 	    : false;
 
@@ -42,7 +64,7 @@ router.post("/", function(req, res, next) {
     const action = 
         typeof(req.body.action) === "string" 
 	&& req.body.action.length > 0
-	&& actionsLibrary[req.body.action]
+	&& typesActionsLibrary[req.body.type][req.body.action]
 	    ? req.body.action
 	    : false;
     
@@ -53,43 +75,56 @@ router.post("/", function(req, res, next) {
             ? req.body.data
             : false;
 
+    // if the request body is constructed correctly
     if (
         data
 	&& (type || action)
 	&& reqHash
     ) {
-        // creates array of nanoseconds, 
-        // chooses second option, 
-	// turns to string
-        const id = process.hrtime()[1].toString();
-        const transformedData = 
-            Array.isArray(data) 
-	        ? data.map(actionsLibrary[action])
-	        : typeof(data) === "string" 
-		    ? actionsLibrary[action](data)
-	            : "Not correct data type";
+        // if type is text and action is sentiment
+	if (type && action) {
+	    // creates array of nanoseconds, 
+            // chooses second option, 
+	    // turns to string
+            const id = process.hrtime()[1].toString();
+            const transformedData = 
+                Array.isArray(data) 
+	            ? data.map(typesActionsLibrary[type][action])
+	            : typeof(data) === "string" 
+		        ? typesActionsLibrary[type][action](data)
+	                : "Not correct data type";
 	
-	fs.writeFile(
-	    `${PATH_TO_SENTIMENTS}/${reqHash}.json`,
-	    JSON.stringify({
-	        reqHash, 
-		type: "sentiment", 
-		data: transformedData, 
-	    }),
-	    function (err, data) {
-	        if (err) {
-		    console.error(err);
-		} else {
-		    console.log("Data saved in file: ", data);
-		}
-	    }
-	)
+	    fs.writeFile(
+	        `${PATH_TO_SENTIMENTS}/${reqHash}.json`,
+	        JSON.stringify({
+	            reqHash, 
+		    type: "sentiment", 
+		    data: transformedData, 
+	        }),
+	        function (err) {
+	            if (err) {
+		        console.error(err);
+		    }  
+	        }
+	    );
         
-	res.status(200).json({
-	    reqHash, 
-	    type: "transactionId",
-	    id
-	});
+	    res.status(200).json({
+	        reqHash, 
+	        type: "transactionId",
+	        id
+	    });
+	
+	} else if (type) {
+	    // Specific type only has one action response.
+            // Read reqHash file from path and respond accordingly
+	    typesActionsLibrary[type](
+	        PATH_TO_SENTIMENTS,
+		reqHash,
+		res
+	    );
+	} else {
+	
+	}
 
     } else {
         res.status(422).json({
