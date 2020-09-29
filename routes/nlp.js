@@ -33,6 +33,8 @@ function getSentiments(
     );
 }
 
+// new code starts here
+
 const actionsTypesLibrary = {
     analyze: {
         text: {
@@ -51,6 +53,7 @@ const actionsTypesLibrary = {
     }
 };
 
+//IP:PORT/api/nlp
 router.post("/", function(req, res, next) {
     
     // action: String 
@@ -60,7 +63,9 @@ router.post("/", function(req, res, next) {
 	&& actionsTypesLibrary[req.body.action]
 	    ? req.body.action
 	    : false;
-	
+    
+    // String[]: 2 types /sentiment/analyze/text
+    // String: 1 types /text/lowercase/text
     // types: String | String[] && String[].length === 2
     // Where types is a single string: Type => Type
     // Where types is an array of two strings: Type[0] => Type[1] 
@@ -107,14 +112,17 @@ router.post("/", function(req, res, next) {
     ) {
         const id = process.hrtime().map(n => `${n}`).join(".");  
 	const request = {reqHash, data, id};
-        function handleThen(value) {
+        
+	function handleThen(value) {
 	    console.log("value: ", value);
             res.status(200).json({message: "Server hit."});
 	}
+	
 	function handleCatch(err) {
 	    console.error("err: ", err);
 	    res.status(400).json({message: "Something went wrong."});
 	}
+	
 	if (typesIsArray) {
 	    baseUrlHandler.post(
 	        `/${types[1]}/${action}/${types[0]}`, 
