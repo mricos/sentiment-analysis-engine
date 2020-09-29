@@ -43,7 +43,7 @@ const actionsTypesLibrary = {
         text: {
 	    text: str => str.toLowerCase()
 	}
-    }.
+    },
     fetch: {
         transactionId: {
 	    sentiment: console.log("Get data from file")    
