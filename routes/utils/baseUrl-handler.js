@@ -1,6 +1,9 @@
 import axios from "axios";
+import os from "os";
+const networkInterfaces = os.networkInterfaces();
 
-const {IP, PORT} = process.env
+const IP = networkInterfaces["eth0"][0].address
+const { PORT } = process.env
 
 const baseUrlHandler = axios.create({baseURL: `${IP}:${PORT}/api/nlp`});
 
