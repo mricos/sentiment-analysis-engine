@@ -5,6 +5,7 @@ const { dirname } = path;
 import { fileURLToPath } from "url";
 const router = express.Router();
 import analyzeSentiments from "./utils/analyze-sentiments.js";
+import baseUrlHandler from "./utils/baseUrl-handler.js";
 
 const __dirname = dirname(fileURLToPath(import.meta.url));
 const PATH_TO_SENTIMENTS = path.join(__dirname, "../data/sentiments");
@@ -32,102 +33,126 @@ function getSentiments(
     );
 }
 
-// Specifies the allowed types and what actions may be performed
-const typesActionsLibrary = {
-    text: {
-        sentiment: analyzeSentiments,
-	capitalize: text => text.toUpperCase()
+const actionsTypesLibrary = {
+    analyze: {
+        text: {
+	    sentiment: analyzeSentiments
+	}
     },
-    transactionId: getSentiments
+    lowercase: {
+        text: {
+	    text: str => str.toLowerCase()
+	}
+    }.
+    fetch: {
+        transactionId: {
+	    sentiment: console.log("Get data from file")    
+	}
+    }
 };
 
 router.post("/", function(req, res, next) {
     
-    // check if data type is string and if it's a type in the library
-    const type = 
-        typeof(req.body.type) === "string" 
-	&& req.body.type.length > 0
-	&& typesActionsLibrary[req.body.type]
-	    ? req.body.type
+    // action: String 
+    const action = 
+        typeof(req.body.action) === "string" 
+	&& req.body.action.length > 0
+	&& actionsTypesLibrary[req.body.action]
+	    ? req.body.action
 	    : false;
+	
+    // types: String | String[] && String[].length === 2
+    // Where types is a single string: Type => Type
+    // Where types is an array of two strings: Type[0] => Type[1] 
+    const types = 
+        typeof(req.body.types) === "string" 
+	&& req.body.types.length > 0
+	&& actionsTypesLibrary[action][req.body.types][req.body.types]
+	    ? req.body.types
+	    : Array.isArray(req.body.types)
+	        && req.body.types.length === 2
+	        && actionsTypesLibrary[
+		    action
+		][
+		    req.body.types[0]
+		][
+		    req.body.types[1]
+		]
+	            ? req.body.types
+		    : false;
 
-    // check if hash is a string or a number	
+    const typesIsArray = Array.isArray(types);
+    const typesIsString = typeof(types) === "string";
+
+    // reqHash: String | Number	
     const reqHash = 
         typeof(req.body.reqHash) === "string" && req.body.reqHash.length > 0
 	|| typeof(req.body.reqHash) === "number"
 	    ? req.body.reqHash
 	    : false;
 
-    // check if action is a string and is in the action library 
-    const action = 
-        typeof(req.body.action) === "string" 
-	&& req.body.action.length > 0
-	&& typesActionsLibrary[req.body.type][req.body.action]
-	    ? req.body.action
-	    : false;
-    
-    // check if data type is string or array
+    // data: String | String[]
     const data = 
         typeof(req.body.data) === "string" && req.body.data.length > 0 
         || Array.isArray(req.body.data) && req.body.data.length > 0 
             ? req.body.data
             : false;
 
-    // if the request body is constructed correctly
+    // if a correct request body was sent
     if (
-	(type || action)
-	&& reqHash
+        reqHash
+	&& types
+	&& action
+	&& data
     ) {
-        // if type is text and action is sentiment
-	if (type && action) {
-	    // creates array of nanoseconds, 
-            // chooses second option, 
-	    // turns to string
-            const id = process.hrtime()[1].toString();
-            const transformedData = 
-                Array.isArray(data) 
-	            ? data.map(typesActionsLibrary[type][action])
-	            : typeof(data) === "string" 
-		        ? typesActionsLibrary[type][action](data)
-	                : "Not correct data type";
-	
-	    fs.writeFile(
-	        `${PATH_TO_SENTIMENTS}/${reqHash}.json`,
-	        JSON.stringify({
-	            reqHash, 
-		    type: "sentiment", 
-		    data: transformedData, 
-	        }),
-	        function (err) {
-	            if (err) {
-		        console.error(err);
-		    }  
-	        }
-	    );
+        const id = process.hrtime().map(n => `${n}`).join(".");  
+	const request = {reqHash, data, id};
         
+	if (typesIsArray) {
+	    baseUrlHandler.post(
+	        `/${types[1]}/${action}/${types[0]}`, 
+		request
+	    );
+	
 	    res.status(200).json({
-	        reqHash, 
-	        type: "transactionId",
-	        id
+	        reqHash,
+		id,
+		type: "transactionId"
+	    });
+
+	} else if (typesIsString) {
+	    baseUrlHandler.post(
+	        `/${types}/${action}/${types}`,
+		request
+	    );
+
+            res.status(200).json({
+	        reqHash,
+		id,
+		type: "transactionId"
 	    });
 	
-	} else if (type) {
-	    // Specific type only has one action response.
-            // Read reqHash file from path and respond accordingly
-	    typesActionsLibrary[type](
-	        PATH_TO_SENTIMENTS,
-		reqHash,
-		res
-	    );
 	} else {
-            res.status(400).json({message: "Type or action is invalid."})	
+	    res.status(422).json({message: "Malformed request body."});
 	}
 
+    // if the request body is malformed
     } else {
-        res.status(422).json({
-	    message: "Request requires data (string or array of strings), type (string), action (string), and reqHash (string or number)"
-	});
+        res.status(422).json({message: "Malformed request body."}); 
     }
+});
+
+router.post("/:toType/:action/:fromType", function (req, res, next) {
+    // if action === "analyze"
+    // else if action === "fetch"
+	
+    const {
+        toType, 
+	action, 
+	fromType
+    } = req.params;
+    console.log(`${toType}/${action}/${fromType} `, req.body);
+
 });
 
 export default router;
