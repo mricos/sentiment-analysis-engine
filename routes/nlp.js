@@ -107,13 +107,20 @@ router.post("/", function(req, res, next) {
     ) {
         const id = process.hrtime().map(n => `${n}`).join(".");  
 	const request = {reqHash, data, id};
-        
+        function handleThen("value: ", value) {
+	    console.log(value);
+            res.status(200).json({message: "Server hit."});
+	}
+	function handleCatch(err) {
+	    console.error("err: ", err);
+	    res.status(400).json({message: "Something went wrong."});
+	}
 	if (typesIsArray) {
 	    baseUrlHandler.post(
 	        `/${types[1]}/${action}/${types[0]}`, 
 		request
-	    ).then(innerReq => console.log(innerReq))
-	    .catch(err => console.error(err));
+	    ).then(handleThen)
+	    .catch(handleCatch);
 	
 	    res.status(200).json({
 	        reqHash,
@@ -125,8 +132,8 @@ router.post("/", function(req, res, next) {
 	    baseUrlHandler.post(
 	        `/${types}/${action}/${types}`,
 		request
-	    ).then(innerReq => console.log(innerReq))
-	    .catch(err => console.error(err));
+	    ).then(handleThen)
+	    .catch(handleCatch);
 
             res.status(200).json({
 	        reqHash,
