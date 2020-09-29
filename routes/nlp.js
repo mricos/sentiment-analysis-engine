@@ -107,8 +107,8 @@ router.post("/", function(req, res, next) {
     ) {
         const id = process.hrtime().map(n => `${n}`).join(".");  
 	const request = {reqHash, data, id};
-        function handleThen("value: ", value) {
-	    console.log(value);
+        function handleThen(value) {
+	    console.log("value: ", value);
             res.status(200).json({message: "Server hit."});
 	}
 	function handleCatch(err) {
