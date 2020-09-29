@@ -112,7 +112,8 @@ router.post("/", function(req, res, next) {
 	    baseUrlHandler.post(
 	        `/${types[1]}/${action}/${types[0]}`, 
 		request
-	    );
+	    ).then(innerReq => console.log(innerReq))
+	    .catch(err => console.error(err));
 	
 	    res.status(200).json({
 	        reqHash,
@@ -124,7 +125,8 @@ router.post("/", function(req, res, next) {
 	    baseUrlHandler.post(
 	        `/${types}/${action}/${types}`,
 		request
-	    );
+	    ).then(innerReq => console.log(innerReq))
+	    .catch(err => console.error(err));
 
             res.status(200).json({
 	        reqHash,
