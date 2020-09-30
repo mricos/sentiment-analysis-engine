@@ -26,15 +26,35 @@ sae-help() {
     '
 }
 
+
+sae-map-through-data() {
+    local data="$(jq '.[]')";
+
+    while read line
+        do
+            echo "$line"
+        done <<< "$data" 
+}
+
 sae-post-data() {
     local ip="$1";
     local port="$2";
-    local path="$3"
-    curl -s -X POST \
-    -H "Content-Type: application/json" \
-    -H "Authorization: token" \
-    -d @- \
-    "$ip:$port$path"
+    local path="$3";
+    
+    while read string
+        do
+	    local data="$(echo '{"data": '"$string"'}')";
+           # echo "$ip"
+           # echo "$port"
+           # echo "$path"
+           # echo "$data"
+            echo "$ip:$port$path"
+            curl -X POST \
+            -H "Content-Type: application/json" \
+            -H "Authorization: token" \
+            -d "$data"
+            "$ip:$port$path";
+        done 
 }
 
 sae-get-data-with-id() {
