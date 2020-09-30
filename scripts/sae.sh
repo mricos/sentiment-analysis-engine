@@ -33,10 +33,11 @@ sae-map-through-data() {
     while read line
         do
             echo "$line"
-        done <<< "$data" 
+        done <<< "$data"
 }
 
 sae-post-data() {
+    
     local ip="$1";
     local port="$2";
     local path="$3";
@@ -84,11 +85,11 @@ sae-specify-action() {
 }
 
 test-sae() {
-    cat /home/admin/src/sentiment-analysis-engine/data/biden-trump.tweetgen \
-    | sae-grab-values text 0 11 \
-    | sae-set-type text \
-    | sae-specify-action sentiment \
-    | sae-post-data 157.245.233.116 1025 /api/nlp
+    DATA=/home/admin/src/sentiment-analysis-engine/data/biden-trump.tweetgen
+    cat $DATA | \
+    sae-grab-values text 0 10 | \
+    sae-map-through-data | \
+    sae-post-data $doZ 1025 /api/nlp/
 }
 
 nstatus() {
