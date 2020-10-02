@@ -29,6 +29,8 @@ sae-help() {
 
 sae-map-through-data() {
     local data="$(jq '.[]')";
+    
+    echo $data >> debug-$(date +%s).txt
 
     while read line
         do
@@ -44,27 +46,24 @@ sae-post-data() {
     
     while read string
         do
-	    local data="$(echo '{"data": '"$string"'}')";
-           # echo "$ip"
-           # echo "$port"
-           # echo "$path"
-           # echo "$data"
-            echo "$ip:$port$path"
+	    #local data="$(echo '{"data": '"$string"'}')";
+            local data='{"data": '"$string"'}';
             curl -X POST \
             -H "Content-Type: application/json" \
             -H "Authorization: token" \
-            -d "$data"
+            -d "$data" \
             "$ip:$port$path";
         done 
 }
 
-sae-get-data-with-id() {
-    local ip="$1";
-    local port="$2";
-    local path="$3";
-    local id="$4";
-    curl -s "$ip:$port$path/$id"
-}
+# deprecated
+#sae-get-data-with-id() {
+#    local ip="$1";
+#    local port="$2";
+#    local path="$3";
+#    local id="$4";
+#    curl -s "$ip:$port$path/$id"
+#}
 
 
 sae-grab-values() {
@@ -74,7 +73,7 @@ sae-grab-values() {
 
 sae-set-type() {
     local type="$1";
-    local nano_hash="$(date +%N)";
+    local nano_hash="$(date +%s.%N)";
     local req_hash=${2:-$nano_hash};
     local data="$(jq '{"type": "'"$type"'", "data": ., "reqHash": "'"$req_hash"'"}')";
     echo "$data"
