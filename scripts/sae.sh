@@ -26,34 +26,59 @@ sae-help() {
     '
 }
 
+sae-grab-values() {
+    local stdin="$2";
+    local stdout="$3";
+
+    local property="$4";
+    local from="$5";
+    local to="$6";
+    
+    # If a range is specified
+    [ -n "$from" ] && [ -n "$to" ] && \
+    jq '.' < "$stdin" | jq '.' -s |\
+    jq '.[]."'$property'"' |\
+    jq '.['$from':'$to']' -s > "$stdout"
+
+    # If there is no range
+    [ -z "$from" ] && [ -z "$to" ] && \
+    jq '.' < "$stdin" | jq '.' -s |\
+    jq '.[]."'$property'"' >> "$stdout"
+}
 
 sae-map-through-data() {
-    local data="$(jq '.[]')";
-    
-    echo $data >> debug-$(date +%s).txt
+    local stdin="$2";
+    local stdout="$3";
 
+    local data="$(jq '.[]' < $stdin)";
+    
     while read line
         do
-            echo "$line"
+            echo "$line" >> recent.$$
         done <<< "$data"
+    
+    mv recent.$$ "$stdout"
 }
 
 sae-post-data() {
-    
-    local ip="$1";
-    local port="$2";
-    local path="$3";
+    local stdin="$2";
+    local stdout="$3";
+
+    local ip="$4";
+    local port="$5";
+    local path="$6";
     
     while read string
         do
 	    #local data="$(echo '{"data": '"$string"'}')";
             local data='{"data": '"$string"'}';
+            
             curl -X POST \
             -H "Content-Type: application/json" \
             -H "Authorization: token" \
             -d "$data" \
-            "$ip:$port$path";
-        done 
+            "$ip:$port$path" >> "$stdout"
+        done <<< "$(cat "$stdin")";
 }
 
 # deprecated
@@ -66,10 +91,7 @@ sae-post-data() {
 #}
 
 
-sae-grab-values() {
-    local data="$(jq '.' -s | jq '.[]."'$1'"' | jq '.['$2':'$3']' -s)";
-    echo "$data"
-}
+
 
 sae-set-type() {
     local type="$1";

@@ -3,13 +3,22 @@
     #
     # Save the path to this script's directory in a global env variable
     #
-    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )/objects"
-    echo "Here is DIR: $DIR"
+    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
 
     #
     # Array that will contain all registered events
     #
     EVENTS=()
+
+    # Actions
+
+    #function analyze-for-sentiment() {
+        
+    #}
+    
+    cat-data() {
+        cat "$2"
+    }
 
     function action1() {
         echo "Action #1 was performed ${2}"
@@ -46,13 +55,18 @@
     #
     # Register our events and the functions that handle them
     #
-    subscribe "/do/work"           "action1" "${DIR}"
-    subscribe "/do/more/work"      "action2" "${DIR}"
-    subscribe "/do/even/more/work" "action1" "${DIR}"
+     subscribe "grab" "sae-grab-values" "${DIR}" # what's the use of this?
+     subscribe "map" "sae-map-through-data" "${DIR}"
+     subscribe "post" "sae-post-data" "${DIR}"
+#    subscribe "/do/work"           "action1" "${DIR}"
+#    subscribe "/do/more/work"      "action2" "${DIR}"
+#    subscribe "/do/even/more/work" "action1" "${DIR}"
 
     #
     # Execute our events
     #
-    publish "/do/work"
-    publish "/do/more/work"
-    publish "/do/even/more/work" "again"
+     publish grab ./data/biden-trump.tweetgen ./transformed/recent "text" "0" "3"
+     publish map ./transformed/recent ./transformed/recent
+     publish post ./transformed/recent ./transformed/final \
+	     157.245.233.116 1025 /api/nlp
+     publish grab ./transformed/final ./transformed/sentiments "sentiment"
