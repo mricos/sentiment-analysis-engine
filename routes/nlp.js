@@ -3,7 +3,7 @@ const router = express.Router();
 import analyzeSentiments from "./utils/analyze-sentiments.js";
 
 
-//http://IP:PORT/api/nlp
+// http://IP:PORT/api/nlp
 router.post("/", function(req, res, next) {
     // data: String
     const data = typeof(req.body.data) === "string" 
@@ -20,6 +20,11 @@ router.post("/", function(req, res, next) {
 	    message: "Incorrect request body data type."
 	});
     }
+});
+
+// http://IP:PORT/api/nlp/:data
+router.get("/:data", function(req, res, next) {
+    console.log("Here is the url: ", req.url);
 });
 
 export default router;
