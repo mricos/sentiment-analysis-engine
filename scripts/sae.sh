@@ -46,18 +46,45 @@ sae-grab-values() {
     jq '.[]."'$property'"' >> "$stdout"
 }
 
+sae-make-raw() {
+    local stdin="$2";
+    local stdout="$3";
+
+    jq '.' -r < "$stdin" > "$stdout"
+}
+
 sae-map-through-data() {
     local stdin="$2";
     local stdout="$3";
 
     local data="$(jq '.[]' < $stdin)";
-    
+
     while read line
         do
-            echo "$line" >> recent.$$
+            echo "$line" >> "$stdout"
         done <<< "$data"
+}
+
+sae-get-data() {
+    local stdin="$2";
+    local stdout="$3";
+
+    local ip="$4";
+    local port="$5";
+    local path="$6";
+    local data="$(cat $stdin | tr " " "-")";
     
-    mv recent.$$ "$stdout"
+    #echo "ip: $ip"
+    #echo "port: $port"
+    #echo "path: $path"
+    #echo "data: $data"
+
+    while read string
+        do
+            echo "Here is the string $string"
+            echo "$ip:$port$path/$string"
+            #curl -s -X GET "$ip:$port$path/$string" >> "$stdout"
+        done <<< "$data"
 }
 
 sae-post-data() {
