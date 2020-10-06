@@ -16,10 +16,6 @@
         
     #}
     
-    cat-data() {
-        cat "$2"
-    }
-
     function action1() {
         echo "Action #1 was performed ${2}"
     }
@@ -58,15 +54,17 @@
      subscribe "grab" "sae-grab-values" "${DIR}" # what's the use of this?
      subscribe "map" "sae-map-through-data" "${DIR}"
      subscribe "post" "sae-post-data" "${DIR}"
-#    subscribe "/do/work"           "action1" "${DIR}"
-#    subscribe "/do/more/work"      "action2" "${DIR}"
-#    subscribe "/do/even/more/work" "action1" "${DIR}"
+     subscribe "make-raw" "sae-make-raw" "${DIR}"
+     subscribe "get" "sae-get-data" "${DIR}"
 
     #
     # Execute our events
     #
-     publish grab ./data/biden-trump.tweetgen ./transformed/recent "text" "0" "3"
-     publish map ./transformed/recent ./transformed/recent
-     publish post ./transformed/recent ./transformed/final \
-	     157.245.233.116 1025 /api/nlp
-     publish grab ./transformed/final ./transformed/sentiments "sentiment"
+     publish grab ./data/biden-trump.tweetgen ./transformed/recent "text" 0 3
+     publish map ./transformed/recent ./transformed/mapped
+     #publish post ./transformed/mapped ./transformed/final \
+         #157.245.233.116 1025 /api/nlp
+     publish make-raw ./transformed/mapped ./transformed/raw
+     #publish get ./transformed/recent ./transformed/final \
+         #157.245.233.116 1025 /api/nlp
+     #publish grab ./transformed/final ./transformed/sentiments "sentiment"
