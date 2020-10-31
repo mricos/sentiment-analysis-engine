@@ -10,8 +10,8 @@ nom-link-to-data() {
   # links program specific file to user specific data
   local poid="$1";
   local poid_index="$2";
-  ln -s "$poid" data.nom
-  ln -s "$poid_index" data.index
+  ln -sf "$poid" data.nom
+  ln -sf "$poid_index" data.index
 }
 
 nom-getids-from-index() {
