@@ -1,70 +1,101 @@
-   #!/usr/bin/env bash
+# Source this file
 
-    #
-    # Save the path to this script's directory in a global env variable
-    #
-    DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )"
+# Array that will contain all registered events
+EVENTS=()
+STREAM="$(cat ./data/biden-trump.tweetgen)"; # TWEETGEN
 
-    #
-    # Array that will contain all registered events
-    #
-    EVENTS=()
+# Actions
 
-    # Actions
+# tweetgen -> json_array
+pseudo-filter() {
+   STREAM="$(echo $STREAM | jq '.text' | jq -s '.')";
+}
 
-    #function analyze-for-sentiment() {
-        
-    #}
-    
-    function action1() {
-        echo "Action #1 was performed ${2}"
-    }
+stream-filter() {
+    jq '.text' | jq -s '.'
+}
 
-    function action2() {
-        echo "Action #2 was performed"
-    }
+# json_array -> 
+pseudo-extract() {
+    local from="$2";
+    local to="$3";
 
-    #
-    # @desc   :: Registers an event
-    # @param  :: string $1 - The name of the event. Basically an alias for a function name
-    # @param  :: string $2 - The name of the function to be called
-    # @param  :: string $3 - Full path to script that includes the function being called
-    #
-    function subscribe() {
-        EVENTS+=("${1};${2};${3}")
-    }
+    STREAM="$(echo $STREAM | jq '.['$from':'$to']')";
+    echo "$STREAM"
+}
 
-    #
-    # @desc   :: Public an event
-    # @param  :: string $1 - The name of the event being published
-    #
-    function publish() {
-        for event in ${EVENTS[@]}; do
-            local IFS=";"
-            read -r -a event <<< "$event"
-            if [[  "${event[0]}" ==  "${1}" ]]; then
-                ${event[1]} "$@"
-            fi
-        done
-    }
+stream-extract(){
+    local from="$1";
+    local to="$2";
+    jq ".[$from:$to]"
+}
 
-    #
-    # Register our events and the functions that handle them
-    #
-     subscribe "grab" "sae-grab-values" "${DIR}" # what's the use of this?
-     subscribe "map" "sae-map-through-data" "${DIR}"
-     subscribe "post" "sae-post-data" "${DIR}"
-     subscribe "make-raw" "sae-make-raw" "${DIR}"
-     subscribe "get" "sae-get-data" "${DIR}"
+stream-extract-broken(){
+    local from="$2";
+    local to="$3";
+    while read line
+    do
+        echo $line
+     	echo $line | jq '.['$from':'$to']'
+    done < "/dev/stdin" 
+}
 
-    #
-    # Execute our events
-    #
-     publish grab ./data/biden-trump.tweetgen ./transformed/recent "text" 0 3
-     publish map ./transformed/recent ./transformed/mapped
-     #publish post ./transformed/mapped ./transformed/final \
-         #157.245.233.116 1025 /api/nlp
-     publish make-raw ./transformed/mapped ./transformed/raw
-     #publish get ./transformed/recent ./transformed/final \
-         #157.245.233.116 1025 /api/nlp
-     #publish grab ./transformed/final ./transformed/sentiments "sentiment"
+subscribe "filter" "pseudo-filter"
+subscribe "extract" "pseudo-extract"
+publish "filter"
+publish "extract" 0 3
+
+
+# @desc   :: Registers an event
+# @param  :: string $1 - The name of the event. Basically an alias for a function name
+# @param  :: string $2 - The name of the function to be called
+function subscribe() {
+    EVENTS+=("${1};${2}")
+}
+
+#
+# @desc   :: Public an event
+# @param  :: string $1 - The name of the event being published
+#
+function publish() {
+for event in ${EVENTS[@]}; do
+    local IFS=";"
+    read -r -a event <<< "$event"
+    if [[  "${event[0]}" ==  "${1}" ]]; then
+	${event[1]} "$@"
+    fi
+done
+}
+
+#
+# Register our events and the functions that handle them
+#
+# subscribe "grab" "sae-grab-values" 
+# subscribe "map" "sae-map-through-data"
+# subscribe "post" "sae-post-data"
+# subscribe "make-raw" "sae-make-raw"
+# subscribe "get" "sae-get-data"
+
+#
+# Execute our events
+#
+# 
+# {
+#   reqHash:NTS
+#   type:
+#   action:
+#   data:
+#}
+
+#NTS
+#TYPE
+#ACTION
+#DATA
+#
+
+reqHash=$(date +%s.%N)
+#publish grab ./data/biden-trump.tweetgen ./transformed/grabbed "text" 0 1 
+#publish map ./transformed/grabbed ./transformed/mapped
+#publish post ./transformed/mapped ./transformed/post-response \
+#    157.245.233.116 1025 /api/nlp
+#publish grab ./transformed/post-response ./transformed/post-sentiments "sentiment"

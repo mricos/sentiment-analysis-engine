@@ -1,0 +1,16 @@
+# one object per \n
+
+process-data-txt-sae(){
+  while read line; do
+    echo "reading: ${line}"
+  done < /dev/stdin
+}
+
+
+helper-map(){
+  jq "[.[] | $1]"
+}
+
+helper-get-data(){
+  jq '.data'
+}

@@ -65,26 +65,19 @@ sae-map-through-data() {
         done <<< "$data"
 }
 
-sae-get-data() {
-    local stdin="$2";
-    local stdout="$3";
+sae-post-string(){
 
-    local ip="$4";
-    local port="$5";
-    local path="$6";
-    local data="$(cat $stdin | tr " " "-")";
-    
-    #echo "ip: $ip"
-    #echo "port: $port"
-    #echo "path: $path"
-    #echo "data: $data"
+    local endpoint="157.245.233.116:1025/api/nlp"
+    local json_data='{"data":"'"$1"'"}'
 
-    while read string
-        do
-            echo "Here is the string $string"
-            echo "$ip:$port$path/$string"
-            #curl -s -X GET "$ip:$port$path/$string" >> "$stdout"
-        done <<< "$data"
+    local res="$(curl -X POST \
+         -H "Content-Type: application/json" \
+         -H "Authorization: token" \
+         -d "$json_data" \
+         $endpoint
+    echo "")"
+
+    object-create sentiment noun $res
 }
 
 sae-post-data() {
@@ -97,7 +90,6 @@ sae-post-data() {
     
     while read string
         do
-	    #local data="$(echo '{"data": '"$string"'}')";
             local data='{"data": '"$string"'}';
             
             curl -X POST \
@@ -107,18 +99,6 @@ sae-post-data() {
             "$ip:$port$path" >> "$stdout"
         done <<< "$(cat "$stdin")";
 }
-
-# deprecated
-#sae-get-data-with-id() {
-#    local ip="$1";
-#    local port="$2";
-#    local path="$3";
-#    local id="$4";
-#    curl -s "$ip:$port$path/$id"
-#}
-
-
-
 
 sae-set-type() {
     local type="$1";
@@ -130,14 +110,6 @@ sae-set-type() {
 
 sae-specify-action() {
     jq '. + {"action": "'"$1"'"}'
-}
-
-test-sae() {
-    DATA=/home/admin/src/sentiment-analysis-engine/data/biden-trump.tweetgen
-    cat $DATA | \
-    sae-grab-values text 0 10 | \
-    sae-map-through-data | \
-    sae-post-data $doZ 1025 /api/nlp/
 }
 
 nstatus() {

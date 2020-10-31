@@ -33,7 +33,7 @@ do
         state="NOT_IN_OBJECT"
         echo $count
         ((debug))  &&  echo "data_end: $count" >&2
-        echo ""
+        #echo ""
     fi	
 
     (( count++ ))

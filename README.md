@@ -11,16 +11,27 @@ Text -> Id
 Id -> Sentiment
 Id -> Text
 
+To get transaction ID from the API
+GET
+/api/nlp/id
+
+Response
+```js
+{
+    id: ID
+}
+```
+
 
 To request analysis from the API
 POST 
-/api/nlp/analyze/sentiment
+/api/nlp/analyze/sentiment/
 
 
 Request
 ```js
 {
-    text: String|String[] 
+    data: String|String[] 
 }
 
 ```

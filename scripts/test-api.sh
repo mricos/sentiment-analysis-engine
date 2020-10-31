@@ -1,5 +1,7 @@
 # use: ./test-api.sh > test.results
 
+## NEEDS REFACTOR
+
 rm ./test.results
 source ./sae.sh
 

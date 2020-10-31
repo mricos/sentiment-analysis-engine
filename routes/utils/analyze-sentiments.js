@@ -3,6 +3,7 @@ import natural from "natural";
 import SpellCorrector from "spelling-corrector";
 import sw from "stopword";
 
+
 const spellCorrector = new SpellCorrector();
 spellCorrector.loadDictionary();
 
