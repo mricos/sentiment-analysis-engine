@@ -6,6 +6,14 @@ nom-getid(){
   echo "${da2[ (($index*4 + 0)) ]}"
 }
 
+nom-link-to-data() {
+  # links program specific file to user specific data
+  local poid="$1";
+  local poid_index="$2";
+  ln -s "$poid" data.nom
+  ln -s "$poid_index" data.index
+}
+
 nom-getids-from-index() {
   local line_num=0;
   while read line
