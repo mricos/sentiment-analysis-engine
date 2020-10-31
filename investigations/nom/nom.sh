@@ -6,6 +6,19 @@ nom-getid(){
   echo "${da2[ (($index*4 + 0)) ]}"
 }
 
+nom-get-all() {
+  local prop="$1";
+  local line_index=1;
+    
+  local file=$(readlink data.nom);
+  local response_data=($(cat response/$file));
+
+  for line in "${response_data[@]}"; do
+    ((line_index % 2 == 0)) && echo "$line" | jq '.'"$prop"'' 
+    ((line_index++))
+  done
+}
+
 nom-link-to-data() {
   # links program specific file to user specific data
   local poid="$1";
@@ -38,7 +51,7 @@ nom-info(){
 }
 
 nom-getdata(){
-  awk "NR>=$2&&NR<=$3" $1
+  awk "NR>=$1&&NR<=$2" data.nom
 }
 
 nom-map(){
