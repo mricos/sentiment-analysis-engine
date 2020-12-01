@@ -1,13 +1,12 @@
 #!/bin/bash
-#cwd=/home/sae/sae-app/bin
-cwd=/home/sae/sae-app/nh
-#cmd=/usr/bin/node
-cmd=/snap/bin/node
-args=../bin/www.js
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+APP="$(dirname "$DIR")";
+CMD=/snap/bin/node
+ARGS=$APP/bin/www.js
 daemonize \
-	-E PORT=$(cat $cwd/port) \
-        -c $cwd \
-        -p $cwd/pid \
-        -e $cwd/err \
-        -o $cwd/log \
-        "$cmd" "$args"
+	-E PORT=$(cat $DIR/port) \
+        -c $DIR \
+        -p $DIR/pid \
+        -e $DIR/err \
+        -o $DIR/log \
+        "$CMD" "$ARGS"

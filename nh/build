@@ -1,4 +1,5 @@
 #!/bin/bash
-pkgdir=/home/sae/sae-app/
-cmd=/snap/bin/npm
-$cmd build $pkgdir
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+PKGDIR="$(dirname "$DIR")";
+CMD=/snap/bin/npm
+$CMD build $PKGDIR
