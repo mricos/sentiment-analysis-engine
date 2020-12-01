@@ -1,8 +1,13 @@
+# path of application runner 'nh'
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+# name of application
 APP="$(basename $(dirname $DIR))";
-PORT=$(cat $DIR/port);
-PID=$(cat $DIR/pid);
-[ ! -z $pid ] && STATUS="Running" || STATUS="Not running"
+# if port isn't empty
+[ -s $DIR/port ] && PORT=$(cat $DIR/port) || PORT="No port selected"
+# if pid isn't empty
+[ -s $DIR/pid ] && 
+PID=$(cat $DIR/pid) && STATUS="Running" || 
+PID="No current process" && STATUS="Not running"
 
 echo "Role: $USER
 Application: $APP
