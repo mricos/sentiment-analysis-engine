@@ -1,0 +1,25 @@
+{
+    "env": {
+        "browser": true,
+        "es6": true
+    },
+    "extends": [
+        "google"
+    ],
+    "globals": {
+        "Atomics": "readonly",
+        "SharedArrayBuffer": "readonly"
+    },
+    "parserOptions": {
+        "ecmaVersion": 2018,
+        "sourceType": "module"
+    },
+    "rules": {
+        "indent": ["error", 4],
+        "quotes": ["error", "double"],
+        "multiline-ternary": ["error", "always"],
+        "operator-linebreak": [2, "before"],
+        "new-cap": ["error", {"newIsCap": false, "capIsNew": false}],
+        "comma-dangle": ["error", {"functions": "never"}]
+    }
+}

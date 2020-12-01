@@ -1,0 +1,11 @@
+#!/bin/bash
+# 
+# Input: data.json.string 
+# Output:data.json.sentiment
+ip=$1
+port=$2
+
+response=$(curl -d @- \
+-H "Content-Type: application/json" \
+-X POST "$ip:$port/api/nlp");
+printf "$response\n"

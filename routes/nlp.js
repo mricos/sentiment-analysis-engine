@@ -1,40 +1,40 @@
 import express from "express";
-import aposToLexForm from "apos-to-lex-form";
-import natural from "natural";
-
-import SpellCorrector from "spelling-corrector";
-import SW from "stopword";
-
 const router = express.Router();
+import analyzeSentiments from "./utils/analyze-sentiments.js";
 
-const spellCorrector = new SpellCorrector();
-spellCorrector.loadDictionary();
 
-router.post("/s-analyzer", function (req, res, next) {
-	const {review} = req.body;
-	const lexedReview = aposToLexForm(review);
-	const casedReview = lexedReview.toLowerCase();
-	const alphaOnlyReview = casedReview
-		.replace(/[^a-zA-Z\s]+/g, "");
-	const {WordTokenizer} = natural;
-	const tokenizer = new WordTokenizer();
-	const tokenizedReview = tokenizer.tokenize(alphaOnlyReview);
+// http://IP:PORT/api/nlp
+router.post("/", function(req, res, next) {
+    // data: String
+    const data = 
+        typeof(req.body.data) === "string" || Array.isArray(req.body.data) 
+	        ? req.body.data 
+	        : false;
 
-	tokenizedReview.forEach(function(word, index) {
-		tokenizedReview[index] = spellCorrector.correct(word);
-	});
+    // if data is String
+    if (typeof(data) === "string") {
+	    
+        const sentiment = analyzeSentiments(data);
+        
+        res.status(200).json({
+	        sentiment
+	    });
 
-	const filteredReview = SW.removeStopwords(tokenizedReview);
+    // if data is Array
+    } else if (Array.isArray(data)) {
 
-	const {SentimentAnalyzer, PorterStemmer} = natural;
-	const analyzer = new SentimentAnalyzer(
-		"English", 
-		PorterStemmer, 
-		"afinn"
-	);
-	const analysis = analyzer.getSentiment(filteredReview);
+        const sentiment = data.map(analyzeSentiments);
 
-	res.status(200).json({analysis});
+        res.status(200).json({
+            sentiment
+        });
+
+    } else {
+        
+        res.status(400).json({
+	        message: "Incorrect request body data type."
+	    });
+    }
 });
 
 export default router;

@@ -1,1 +1,7 @@
 node_modules
+response
+scripts/objects
+.vscode/
+scripts/transformed/
+.qik
+

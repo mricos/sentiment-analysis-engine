@@ -5,21 +5,84 @@ Provides positive, negative, or neutral classification for a sample of  English 
 Current version is based off of [Natural](https://github.com/NaturalNode/natural), the node-based NLP library.
 
 ## API
-To query the API
+Summary
+
+Text -> Id
+Id -> Sentiment
+Id -> Text
+
+To get transaction ID from the API
+GET
+/api/nlp/id
+
+Response
 ```js
 {
-    key: "system assigned key value",
-    text: "English sentence or word",
-    language: "en"
+    id: ID
+}
+```
+
+
+To request analysis from the API
+POST 
+/api/nlp/analyze/sentiment/
+
+
+Request
+```js
+{
+    data: String|String[] 
+}
+
+```
+
+Response
+```js
+{
+    id: ID
+}
+
+```
+
+
+To request finished analysis
+POST 
+/api/nlp/analyze/sentiment/:id
+
+Request
+```js
+{
+    id: ID
 }
 ```
 
 Response
 ```js
 {
-    sentiment: "positive | negative | neutral"
+    sentiment: Sentiment|Sentiment[]        
 }
 ```
+
+
+To request original data
+POST
+/api/nlp/data/:id
+
+Request
+```js
+{
+    id: ID
+}
+```
+
+Response
+```js
+{
+    data: Text|Text[]        
+}
+```
+
+
 ## 12 Factors
 
 |Factor| Implementation Strategy|
@@ -41,13 +104,15 @@ Response
 - [12 factor slides](https://peterlyons.com/twelve-factor-nodejs/#/16)
 - [twelve-factor methodology used at cloud.gov](https://github.com/adborden/twelve-factor-nodejs)
 - [Ben Awad on CI/CD clean-up video](https://www.youtube.com/watch?v=CYlUcIH3dPg)
+- [Spacy](https://spacy.io/)
+- [Natural Language Processing](https://en.wikipedia.org/wiki/Natural_language_processing)
 
 
 
 
 ## TODO
 - ~~Give Mike permissions~~
-- Specify 12 factors used under references
-- Add a link to Spacy
+- ~~Specify 12 factors used under references~~
+- ~~Add a link to Spacy~~
 - Find a couple good articles on NLP
 - Respond to requests with netcat (nc)

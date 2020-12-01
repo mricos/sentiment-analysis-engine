@@ -1,16 +1,21 @@
+/* Original example #! as first two characters so the file
+could be run as a full blooded linux command (and not as the
+input to node). But we want to explicitly set runtime, etc,
+and don't want someone to run this file from the command line.
+
 #!/usr/bin/env node
 
-/*jslint
-    node
 */
+
+/* eslint valid-jsdoc: "error" */
 
 /**
  * Module dependencies.
  */
 
 import app from "../index.js";
-import debug_module from "debug";
-const debug = debug_module("node-nlp:server");
+import debugModule from "debug";
+const debug = debugModule("node-nlp:server");
 import http from "http";
 
 /**
@@ -56,9 +61,11 @@ function onError(error) {
     if (error.syscall !== "listen") {
         throw error;
     }
-    const bind = typeof PORT === "string"
-        ? "Pipe " + PORT
-        : "Port " + PORT;
+    const bind = (
+        typeof PORT === "string"
+            ? "Pipe " + PORT
+            : "Port " + PORT
+    );
 
     // handle specific listen errors with friendly messages
     switch (error.code) {
@@ -82,9 +89,11 @@ function onError(error) {
 function onListening() {
     "use strict";
     const addr = server.address();
-    const bind = typeof addr === "string"
-        ? "pipe " + addr
-        : "port " + addr.port;
+    const bind = (
+        typeof addr === "string"
+            ? "pipe " + addr
+            : "port " + addr.port
+    );
     debug("Listening on " + bind);
 }
 

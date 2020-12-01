@@ -1,0 +1,37 @@
+#
+# NOUNS
+#
+
+data.string 
+Quick brown fox.
+
+data.jsonString 
+{ "data":"Quick brown fox." }
+
+data.jsonStringArray 
+{ "data":["Quick brown fox."] }
+
+data.jsonSentiment
+{
+  "sentiment":"float-as-string"
+}
+
+data.jsonSentimentArray 
+{"sentiment":["float-as-string"]}
+
+
+#
+# VERBS
+#
+
+process.jsonStringToJsonSentiment
+data.jsonString
+data.jsonSentiment
+
+process.jsonStringArrayToJsonSentimentArray
+data.jsonStringArray
+data.jsonSentimentArray
+
+process.stringToJsonString
+data.string
+data.jsonString

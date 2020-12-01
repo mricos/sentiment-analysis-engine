@@ -1,0 +1,96 @@
+Example request:
+1602020938.778809322
+0000000000.000000000
+action=get_sentiment_from_raw_string
+type=raw_string
+The sentence to be analyzed.
+
+Example request:
+1602020938.778809322
+0000000000.000000000
+action=get_sentiment_from_raw_string
+type=json_data_string
+{"reqId":"1602020938.778809322",
+ "data": "The sentence to be analyzed."}
+
+Pre-pending:
+Request file: nanosecond format
+object-id (request id)
+type: raw_string
+augmentation: null 
+(data) This is the text to be analyzed
+
+func that will take the object-id and the text and place into a json object to send it
+
+Complete:
+
+Request file: nanosecond format
+object-id (request id)
+type: raw_string
+augmentation: obj-id1, obj-id2 
+(data) This is the text to be analyzed
+
+Response file: nanosecond format
+object-id of response
+type-in: object-id of request
+(type-out): /api/nlp/sentiment
+data from response
+
+type=json_sentiment_float
+{ "sentiment": "0.1111"}
+
+
+Example response:
+1602020938.778809999
+noun
+sentiment_json
+{"reqId":"1602020938.778809322"}
+{"sentiment":"0.1111"}
+
+If in pending status:
+
+request file: nanosecond format
+object-id of request
+action
+type
+data
+
+If complete status:
+
+request file: nanosecond format
+object-id of request
+action
+type
+data
+object-id of a response
+object-id of a response
+etc
+
+response file: nanosecond format
+object-id of response
+object-id of request
+action
+type
+data
+
+
+
+
+
+
+
+1602020938.778809322
+noun:action
+sentiment_json:type
+{"sentiment":"0.1111"}
+1602021778.191379225
+1602020938.778809322
+noun:action
+sentiment_json:type
+{"sentiment":"0.1111"}
+1602021778.191379225
+1602020938.778809322
+noun:action
+sentiment_json:type
+{"sentiment":"0.1111"}
+1602021778.191379225
