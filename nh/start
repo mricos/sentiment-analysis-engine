@@ -1,12 +1,12 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 APP="$(dirname "$DIR")";
-cmd=/snap/bin/node
-args=$APP/bin/www.js
+CMD=/snap/bin/node
+ARGS=$APP/bin/www.js
 daemonize \
 	-E PORT=$(cat $DIR/port) \
         -c $DIR \
         -p $DIR/pid \
         -e $DIR/err \
         -o $DIR/log \
-        "$cmd" "$args"
+        "$CMD" "$ARGS"
