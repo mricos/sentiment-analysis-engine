@@ -1,11 +1,12 @@
-dir=$(dirname $BASH_SOURCE)
->&2 echo "Status for  $dir:
-PWD: $PWD
-BASH_SOURCE: $BASH_SOURCE
-dir: $dir
-with PID: $(cat $dir/pid)
-Tail of $dir/log:
-$(tail $dir/log)
-Tail of $dir/err:
-$(tail $dir/err)
-"
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+APP="$(basename $(dirname $DIR))";
+PORT=$(cat $DIR/port);
+PID=$(cat $DIR/pid);
+[ ! -z $pid ] && STATUS="Running" || STATUS="Not running"
+
+echo "Role: $USER
+Application: $APP
+PID: $PID
+Status: $STATUS
+Port: $PORT"
+
