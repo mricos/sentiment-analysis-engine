@@ -1,11 +1,7 @@
-image: alpine:latest
-
-pages:
+stages:
+  - deploy
+deploy:
   stage: deploy
   script:
-  - echo 'Nothing to do...'
-  artifacts:
-    paths:
-    - public
-  only:
-  - dev
+    - npm install
+    - node ./bin/www.js
