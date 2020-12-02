@@ -1,10 +1,11 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+[ -s $DIR/pid ] && echo "Process $(cat $DIR/pid) already running" && exit 1
 APP="$(dirname "$DIR")";
 CMD=/snap/bin/node
 ARGS=$APP/bin/www.js
 daemonize \
-	-E PORT=$(cat $DIR/port) \
+        -E PORT=$(cat $DIR/port) \
         -c $DIR \
         -p $DIR/pid \
         -e $DIR/err \
