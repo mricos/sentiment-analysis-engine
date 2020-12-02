@@ -6,79 +6,23 @@ Current version is based off of [Natural](https://github.com/NaturalNode/natural
 
 ## API
 Summary
-
-Text -> Id
-Id -> Sentiment
-Id -> Text
-
-To get transaction ID from the API
-GET
-/api/nlp/id
-
-Response
 ```js
-{
-    id: ID
-}
+DATA_REQUEST={ "data": String | String[] }
 ```
-
-
 To request analysis from the API
-POST 
-/api/nlp/analyze/sentiment/
-
+Send POST to /api/nlp
 
 Request
 ```js
 {
     data: String|String[] 
 }
-
 ```
 
 Response
 ```js
 {
     id: ID
-}
-
-```
-
-
-To request finished analysis
-POST 
-/api/nlp/analyze/sentiment/:id
-
-Request
-```js
-{
-    id: ID
-}
-```
-
-Response
-```js
-{
-    sentiment: Sentiment|Sentiment[]        
-}
-```
-
-
-To request original data
-POST
-/api/nlp/data/:id
-
-Request
-```js
-{
-    id: ID
-}
-```
-
-Response
-```js
-{
-    data: Text|Text[]        
 }
 ```
 
@@ -106,13 +50,3 @@ Response
 - [Ben Awad on CI/CD clean-up video](https://www.youtube.com/watch?v=CYlUcIH3dPg)
 - [Spacy](https://spacy.io/)
 - [Natural Language Processing](https://en.wikipedia.org/wiki/Natural_language_processing)
-
-
-
-
-## TODO
-- ~~Give Mike permissions~~
-- ~~Specify 12 factors used under references~~
-- ~~Add a link to Spacy~~
-- Find a couple good articles on NLP
-- Respond to requests with netcat (nc)
