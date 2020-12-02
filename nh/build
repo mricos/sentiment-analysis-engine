@@ -1,5 +1,9 @@
 #!/bin/bash
 DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
 PKGDIR="$(dirname "$DIR")";
+echo "Building project in path $PKGDIR"
 CMD=/snap/bin/npm
-$CMD build $PKGDIR
+cd $PKGDIR
+$CMD install $PKGDIR
+cd - &> /dev/null
+
