@@ -95,12 +95,12 @@ function onListening() {
             : "port " + addr.port
     );
     debug("Listening on " + bind);
+    console.log(`Project SAE running on port: ${PORT}`);
 }
 
 /**
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(PORT, () => console.log(`Project SAE running on port: ${PORT}`));
 server.on("error", onError);
 server.on("listening", onListening);
