@@ -101,6 +101,6 @@ function onListening() {
  * Listen on provided port, on all network interfaces.
  */
 
-server.listen(PORT);
+server.listen(PORT, () => console.log(`Project SAE running on port: ${PORT}`));
 server.on("error", onError);
 server.on("listening", onListening);
