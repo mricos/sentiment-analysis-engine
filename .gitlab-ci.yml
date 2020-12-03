@@ -26,12 +26,8 @@ validate_package_scope:
         exit 1
       fi
 
-build:
-  stage: build
-  script:
-    - npm install
-
 deploy:
   stage: deploy
   script:
+    - npm install
     - npm start
