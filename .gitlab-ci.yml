@@ -32,4 +32,4 @@ build:
 deploy:
   stage: deploy
   script:
-    - node ./bin/www.js
+    - npm start
