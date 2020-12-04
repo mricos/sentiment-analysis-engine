@@ -1,0 +1,8 @@
+#!/bin/bash
+DIR="$( cd "$( dirname "${BASH_SOURCE[0]}" )" && pwd )";
+PKGDIR="$(dirname "$DIR")";
+echo "Installing dependencies in path $PKGDIR"
+CMD=/snap/bin/npm
+cd $PKGDIR
+$CMD install $PKGDIR
+cd - &> /dev/null
