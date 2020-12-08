@@ -1,3 +1,7 @@
+sae-test(){
+ curl -d '{"data":[ "good bad and ugly", "very good", "very bad", "pretty good","could not be better" ]}' -H "Content-Type: application/json" $doZ:1029/api/nlp
+echo "";
+}
 sae-help() {
     echo '
         sae- functions serve to interact with Sentiment Analysis Engine,
