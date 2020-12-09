@@ -13,7 +13,7 @@ and don't want someone to run this file from the command line.
  * Module dependencies.
  */
 
-import app from "../index.js";
+import app from "./index.js";
 import debugModule from "debug";
 const debug = debugModule("node-nlp:server");
 import http from "http";

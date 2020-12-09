@@ -1,14 +1,15 @@
 /* jslint
     node
 */
+
 import express from "express";
 import cookieParser from "cookie-parser";
 import logger from "morgan";
-//import authorizer from "./utils/auth.js";
+//import authorizer from "../utils/auth.js";
 
-import nlpRouter from "./routes/nlp.js";
-import testRouter from "./routes/tests.js";
-import saeRouter from "./routes/sae.js";
+import nlpRouter from "../routes/nlp.js";
+import testRouter from "../routes/tests.js";
+import saeRouter from "../routes/sae.js";
 
 const app = express();
 
