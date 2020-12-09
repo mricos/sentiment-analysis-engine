@@ -10,7 +10,7 @@ Chunked Data Workflow
 #ln -s 1604091136178378045 data.nom
 #ln -s 1604091136178378045.index data.index
 
-3) Dispatch
+X 3) Dispatch
 
 4) Loop over responses for analysis
 For each ResId (file name in response/ dir):

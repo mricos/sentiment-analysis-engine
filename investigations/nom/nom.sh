@@ -6,16 +6,19 @@ nom-getid(){
   echo "${da2[ (($index*4 + 0)) ]}"
 }
 
-nom-get-all() {
-  local prop="$1";
-  local line_index=1;
-    
-  local file=$(readlink data.nom);
-  local response_data=($(cat response/$file));
+# new
+nom-get-all-datatype-from-batch() {
+  local datatype="$1";
+  local batch_id="$2";
+  local line_num=0;
 
-  for line in "${response_data[@]}"; do
-    ((line_index % 2 == 0)) && echo "$line" | jq '.'"$prop"'' 
-    ((line_index++))
+  for file in $(ls response/);
+  do
+    [ "$(echo $file | awk -F'batch' '{ print $2 }')" == "$batch_id" ] && 
+    while read line; do
+      (((line_num % 4) == 3)) && echo $line | jq '.'"$datatype"''
+      ((line_num++))
+    done < "response/$file"
   done
 }
 
@@ -48,6 +51,27 @@ nom-info(){
   echo ${index[(($1*4+3))]}
   echo "Data is: "
   echo $(nom-get-data ./data.nom ${index[(($1*4+2))]} ${index[(($1*4+3))]} )
+}
+
+# new
+nom-get-responses-from-batch() {
+  local batch_id="$1";
+
+  for file in $(ls response/);
+  do
+    [ "$(echo $file | awk -F'batch' '{ print $2 }')" == "$batch_id" ] && 
+    echo "$file" | awk -F'batch' '{ print $1 }' 
+  done
+
+  #awk 'FNR == 1{ print FILENAME }' \
+  #response/1604513539276085335batch1604091136178378045 | 
+  #cut -d'/' -f2 | 
+  #awk -F'batch' '{ print $1 }'
+
+  #awk 'FNR == 1{ print FILENAME }' \
+  #response/1604513539276085335batch1604091136178378045 | 
+  #cut -d'/' -f2 | 
+  #awk -F'batch' '{ print $2 }'
 }
 
 nom-getdata(){

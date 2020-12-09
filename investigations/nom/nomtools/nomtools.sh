@@ -1,4 +1,4 @@
-NOMPATH=/home/admin/src/sentiment-analysis-engine/scripts/investigations/nom
+NOMPATH=/home/admin/src/sentiment-analysis-engine/investigations/nom
 nom-go-build(){
   go build -o nom-go $NOMPATH/go/nom.go
 }
