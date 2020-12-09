@@ -1,38 +1,6 @@
 #!/bin/bash
 # Input: NomIndexObjectStream
 
-# maybe deprecated
-#controller-augment() {
-#  local response_ids=();
-#  local response_data=();
-
-#  for file in $(ls response/); do
-#    response_ids+=($(awk "NR>=2&&NR<=2" response/$file));
-#    response_data+=($(awk "NR>=3&&NR<=3" response/$file));
-#  done
-#  echo "completed ids: ${response_ids[*]}"
-#  echo "data from response: ${response_data[*]}"
-
-#  local ids=();
-#  local data=();
-#  while read id
-#  do
-#    read type
-#    read start
-#    read stop
-#    json="$(awk "NR>=$start&&NR<=$stop" data.nom)";
-#    ids+=($id)
-    # The string locks each line into one element
-#    data+=("$json")
-#  done < "/dev/stdin"
- 
-#  for i in $(seq 0 "${#response_ids[@]}"); do
-    # nom-getdata-from-object() $1 = object_number
-#    echo "${data[$i]}" | jq '. + '"${response_data[$i]}"''
-#  done
-  
-#}
-
 controller-showtypes(){
   local line_num=0;
 
