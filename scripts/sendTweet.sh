@@ -1,4 +1,4 @@
-saenodeholdercom="$doZ:1025"
+saenodeholdercom="$doZ:1029"
 echo $saenodeholdercom
 curl -d \
 '{"data": "'"$1"'"}' \

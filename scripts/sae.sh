@@ -2,6 +2,33 @@ sae-test(){
  curl -d '{"data":[ "good bad and ugly", "very good", "very bad", "pretty good","could not be better" ]}' -H "Content-Type: application/json" $doZ:1029/api/nlp
 echo "";
 }
+sae-test-verbose(){
+ curl -v -d '{"data":[ "good", "very good", "very bad", "bad" ]}'\
+ -H "Content-Type: application/json" \
+ $doZ:1029/api/nlp
+echo "";
+}
+sae-test-mesh(){
+ curl -v -d '{"data":[ "good", "bad" ]}' \
+      -H "Content-Type: application/json" \
+       sae-app.nodeholder.com/api/nlp
+echo "";
+}
+sae-test-endpoint(){
+ curl -v -d '{"data":[ "good", "bad" ]}' \
+      -H "Content-Type: application/json" \
+       sae-app.nodeholder.com/$1
+echo "";
+}
+sae-test-dns(){
+  local data='{"data":[ "good", "bad", "ugly"]}'
+  local type='Content-Type: application/json'
+  local ip=$doZ
+  local port=1029
+  local endpoint="api/nlp"
+ curl -d "$data" -H "$type" $ip:$port/$endpoint
+  echo "";
+}
 sae-help() {
     echo '
         sae- functions serve to interact with Sentiment Analysis Engine,
