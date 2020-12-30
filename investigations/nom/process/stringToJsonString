@@ -1,5 +1,0 @@
-#!/bin/bash
-
-while IFS='$\n' read -r line; do
-    echo '{"data": "'"$line"'"}'
-done
