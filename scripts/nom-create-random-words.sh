@@ -8,7 +8,7 @@ nom-create-random-words() {
   while [[ "$amount" > 0 ]]; do
     # generates random index 
     # uses random index to append word from words array to random_words
-    random_words+=("${words[$(((1 + $RANDOM % "$len")))]}");    
+    random_words+=("${words[$(shuf -i 0-$len -n 1)]}");
     ((amount--))
   done
   echo "${random_words[*]}"
