@@ -4,12 +4,21 @@ Provides positive, negative, or neutral classification for a sample of  English 
 
 Current version is based off of [Natural](https://github.com/NaturalNode/natural), the node-based NLP library.
 
-## API
-Summary
-```js
-DATA_REQUEST={ "data": String | String[] }
+## Install
+```bash
+git clone https://gitlab.com/zoverlvx/sentiment-analysis-engine.git
+
+npm i
 ```
-To request analysis from the API
+
+## Run
+```bash
+npm start
+```
+
+## API
+
+To request sentiment analysis from the API
 Send POST to /api/nlp
 
 Request
@@ -22,8 +31,16 @@ Request
 Response
 ```js
 {
-    id: ID
+    sentiment: Sentiment|Sentiment[]
 }
+```
+
+Example Request:
+```bash
+curl -X POST \
+-H "Content-Type: application/json" \
+-d '{"data": ["good", "bad", "beautiful"]}'\
+localhost:3000/api/nlp
 ```
 
 
