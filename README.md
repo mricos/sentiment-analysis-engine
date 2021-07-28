@@ -8,18 +8,19 @@ Current version is based off of [Natural](https://github.com/NaturalNode/natural
 ```bash
 git clone https://gitlab.com/zoverlvx/sentiment-analysis-engine.git
 
-npm i
+cd sentiment-analysis-engine && npm i
 ```
 
 ## Run
 ```bash
-npm start
+npm start [PORT]
 ```
+Port defaults to 3000
 
 ## API
 
 To request sentiment analysis from the API
-Send POST to /api/nlp
+Send POST to localhost:PORT/api/nlp
 
 Request
 ```js
