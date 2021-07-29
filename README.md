@@ -20,7 +20,7 @@ npm start
 
 To request sentiment analysis from the API\
 Send POST to localhost:PORT/api/nlp\
-PORT defaults to 3000 if PORT is not in environment\
+PORT defaults to 3000 if PORT is not in environment
 
 Request
 ```js
