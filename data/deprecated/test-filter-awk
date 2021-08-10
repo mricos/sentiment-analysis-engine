@@ -1,2 +1,0 @@
-#!/bin/bash
-awk 'NR>=$1 && NR<=$2 { print }'
