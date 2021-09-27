@@ -4,7 +4,7 @@
   "private": true,
   "type": "module",
   "scripts": {
-    "start": "node ./bin/www.js"
+    "start": "node ./bin/www.js & node ./dashboard-server.js"
   },
   "dependencies": {
     "apos-to-lex-form": "^1.0.5",
