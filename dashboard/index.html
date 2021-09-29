@@ -17,74 +17,105 @@
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js" integrity="sha512-lTLt+W7MrmDfKam+r3D2LURu0F47a3QaW5nF0c6Hl0JDZ57ruei+ovbg7BrZ+0bjVJ5YgzsAWE+RreERbpPE1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/babel">
+        
+	const PORT = "3000"
+	// url for the API    
+	const API = `http://localhost:${PORT}/api/nlp`;
 
+        // define command line interface
+        function SaeCmdLine() {
 
-	    // define command line interface
-	    function SaeCmdLine() {
-	        
-		const [text, setText] = React.useState("");
+            const [text, setText] = React.useState("");
+            // single - the input is interpreted as a single string
+            // each - the input is interpreted as each word 
+            // and sent in an array
+            const [option, setOption] = React.useState("single");
 
-                // submit entire text string for single analysis
-	        async function handleSubmit(e) {
+            function handleOption(e) {
+                setOption(e.target.value);
+            }
 
-                    e.preventDefault();
-                    /*
-		    const options = {
-			method: "POST",
-			body: JSON.stringify({
-			    data: text
-			}),
-			headers: {
-			    "Content-Type": "application/json"
-			}
-		    };
-		    */
+            // submit entire text string for single analysis
+            async function handleSubmit(e) {
 
-		    const { data: { sentiment } } = await axios.post(
-		        "http://localhost:3000/api/nlp",
-			{ data: text }
-		    );
+                e.preventDefault();
 
-		    /*
-		    const response = await fetch(
-                        "http://localhost:3000/api/nlp", 
-		        options
-		    );
-		    */
+                // Response: { data: Sentiment | Sentiment[] } 
+                // pulls sentiment from the data object
 
+                if (option === "single") {
+	            const { data: { sentiment } } = await axios.post(
+	                // POST Request
+	                API,
+	                { data: text }
+	            );
 		    alert(sentiment);
-		    setText("");
-		}
+	            return;
+                }
+    
+                if (option === "each") {
+	            const { data: { sentiment } } = await axios.post(
+                        // POST Request
+			API,
+			{ data: text.split(" ") }
+		    );
+		    alert(sentiment);
+		    return;
 
+                }
 
-		function handleChange(e) {
-                    setText(e.target.value);
-		}
+            }
 
-                const centered = {
-                    "position": "fixed",
-		    "top": "50%",
-		    "left": "50%",
-		    "transform": "translate(-50%, -50%)"
-		};
+            function handleChange(e) {
+                setText(e.target.value);
+            }
 
-                return (
-		    <form
-		        style={centered}
-		        onSubmit={handleSubmit}
-		    >
-                        <input 
-                            type="text"
-			    value={text}
-			    onChange={handleChange}
-			/>
-			<input type="submit" value="Analyze" />
-		    </form>
-		);
-	    }
+            const centered = {
+                "position": "fixed",
+                "top": "50%",
+                "left": "50%",
+                "transform": "translate(-50%, -50%)",
+            };
 
-	    const mountPoint = document.getElementById("root");
-	    ReactDOM.render(<SaeCmdLine />, mountPoint);
+	    const displayBlock = { "display": "block" };
+
+            return (
+		<div style={centered}>
+		    <button onClick={() => setText("")}>Clear</button>
+                    <form
+	                onSubmit={handleSubmit}
+                    >
+		        <label style={displayBlock}>
+	                    Analyzed as single text string
+	                    <input 
+		                type="radio" 
+		                value="single"
+		                checked={option === "single"}
+		                onChange={handleOption}
+	                    />
+	                </label>
+		        <label style={displayBlock}>
+	                    Analyzed per word
+	                    <input 
+		                type="radio"
+		                value="each"
+		                checked={option === "each"}
+		                onChange={handleOption}
+	                    />
+	                </label>
+	                <input 
+	                    type="text"
+	                    value={text}
+	                    onChange={handleChange}
+	                />
+	                <input type="submit" value="Analyze" />
+                    </form>
+		</div>
+            );
+        }
+
+        const mountPoint = document.getElementById("root");
+        ReactDOM.render(<SaeCmdLine />, mountPoint);
 
     </script>
   </body>
