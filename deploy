@@ -1,1 +1,1 @@
-npm start
+node ./dashboard-server.js & node ./api/bin/www.js
