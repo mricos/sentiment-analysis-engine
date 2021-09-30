@@ -1,1 +1,1 @@
-node ./dashboard-server.js & node ./api/bin/www.js
+node ./dashboard-server.js & node ./api/index.js
