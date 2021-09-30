@@ -22,6 +22,9 @@ app.use(express.json({limit: "25mb"}));
 app.use(cookieParser());
 
 //app.use("/sae", saeRouter);
+app.get("/", function (req, res) {
+    res.json({test: "working"});
+});
 app.use("/api/nlp", nlpRouter);
 
 export default Object.freeze(app);
