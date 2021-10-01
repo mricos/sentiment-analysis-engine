@@ -32,7 +32,8 @@ router.post("/", function(req, res, next) {
     } else {
         
         res.status(400).json({
-	        message: "Incorrect request body data type."
+	        message: "Incorrect request body data type.",
+		data: req.body.data
 	    });
     }
 });
