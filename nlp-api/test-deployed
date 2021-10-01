@@ -2,3 +2,5 @@ curl -X POST \
 -H 'Content-Type: application/json'\
 -d '{"data":"good"}' \
 'https://sentiment-analysis-engine-api.vercel.app/api/nlp' | jq '.'
+
+curl 'https://sentiment-analysis-engine-api.vercel.app/' | jq '.'
