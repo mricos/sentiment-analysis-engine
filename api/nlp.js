@@ -34,4 +34,4 @@ export default function(req, res) {
 		data: req.body.data
 	    });
     }
-});
+}
