@@ -114,8 +114,9 @@
                     </form>
 		    <div>
 		        {
-			    option === "each" && analysis.length ? 
-			    analysis.join(", ") : analysis
+			    typeof(analysis) === "string" 
+			        ? analysis 
+				: analysis.join(", ")
 			}
 		    </div>
 		</div>
