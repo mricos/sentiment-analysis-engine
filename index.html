@@ -18,7 +18,7 @@
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.21.4/axios.min.js" integrity="sha512-lTLt+W7MrmDfKam+r3D2LURu0F47a3QaW5nF0c6Hl0JDZ57ruei+ovbg7BrZ+0bjVJ5YgzsAWE+RreERbpPE1g==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script type="text/babel">
         
-	const PORT = "3000"
+	//const PORT = "3000"
 	// url for the API    
         const API = "https://sentiment-analysis-engine.vercel.app/api/nlp";
 	//const API = `http://localhost:${PORT}/api/nlp`;
@@ -31,6 +31,7 @@
             // each - the input is interpreted as each word 
             // and sent in an array
             const [option, setOption] = React.useState("single");
+	    const [analysis, setAnalysis] = React.useState("");
 
             function handleOption(e) {
                 setOption(e.target.value);
@@ -50,7 +51,7 @@
 	                API,
 	                { data: text }
 	            );
-		    alert(sentiment);
+		    setAnalysis(sentiment);
 	            return;
                 }
     
@@ -60,7 +61,7 @@
 			API,
 			{ data: text.split(" ") }
 		    );
-		    alert(sentiment);
+		    setAnalysis(sentiment);
 		    return;
 
                 }
@@ -111,6 +112,7 @@
 	                />
 	                <input type="submit" value="Analyze" />
                     </form>
+		    <div>{analysis.length ? analysis : ""}</div>
 		</div>
             );
         }
