@@ -1,11 +1,12 @@
 {
   "type": "module",
   "scripts": {
-      "build": "cat ./index.env | envsubst > index.html"
+    "build": "./node_modules/envsub/bin/envsub.js index.env index.html"
   },
   "dependencies": {
     "@vercel/node": "^1.12.1",
     "apos-to-lex-form": "^1.0.5",
+    "envsub": "^4.0.7",
     "express": "^4.17.1",
     "natural": "^5.1.1",
     "spelling-corrector": "^3.0.0",

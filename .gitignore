@@ -4,4 +4,6 @@ scripts/objects
 .vscode/
 scripts/transformed/
 .qik
+.env
+index.html
 
