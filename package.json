@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "build": "mkdir public && ./node_modules/envsub/bin/envsub.js index.env ./public/index.html"
+    "build": "./node_modules/envsub/bin/envsub.js index.env ./public/index.html"
   },
   "dependencies": {
     "@vercel/node": "^1.12.1",
