@@ -6,4 +6,5 @@ scripts/transformed/
 .qik
 .env
 index.html
+./public/index.html
 
