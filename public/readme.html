@@ -18,9 +18,7 @@
     ></script>
     <script type="text/babel">
         
-        function Content() {
-            return (
-	        <ReactMarkdown># Sentiment Analysis Engine GUI
+	        const content = `# Sentiment Analysis Engine GUI
 
 Provides positive, negative, or neutral classification for a sample of  English language text.
 
@@ -100,12 +98,10 @@ localhost:3000/api/nlp
 - [twelve-factor methodology used at cloud.gov](https://github.com/adborden/twelve-factor-nodejs)
 - [Ben Awad on CI/CD clean-up video](https://www.youtube.com/watch?v=CYlUcIH3dPg)
 - [Spacy](https://spacy.io/)
-- [Natural Language Processing](https://en.wikipedia.org/wiki/Natural_language_processing)</ReactMarkdown>
-	    );
-	}	
+- [Natural Language Processing](https://en.wikipedia.org/wiki/Natural_language_processing)`	
 
         const mountPoint = document.getElementById("root");
-        ReactDOM.render(<Content />, mountPoint);
+	ReactDOM.render(<ReactMarkdown children={content} />, mountPoint);
 
     </script>
   </body>
