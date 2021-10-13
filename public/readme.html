@@ -39,16 +39,16 @@ Use the clear button when you'd like to clear your text from the input.
 
 
 ## Install
-```bash
+~~~
 git clone https://gitlab.com/zoverlvx/sentiment-analysis-engine.git
 
 cd sentiment-analysis-engine/node-api-nlp && npm i
-```
+~~~
 
 ## Run
-```bash
+~~~
 npm start 
-```
+~~~
 
 ## API
 
@@ -57,26 +57,26 @@ Send POST to localhost:PORT/api/nlp\
 PORT defaults to 3000 if PORT is not in environment
 
 Request
-```js
+~~~
 {
     data: String|String[] 
 }
-```
+~~~
 
 Response
-```js
+~~~
 {
     sentiment: Sentiment|Sentiment[]
 }
-```
+~~~
 
 Example Request:
-```bash
+~~~
 curl -X POST \
 -H "Content-Type: application/json" \
 -d '{"data": ["good", "bad", "beautiful"]}'\
 localhost:3000/api/nlp
-```
+~~~
 
 ## 12 Factors
 
@@ -101,7 +101,7 @@ localhost:3000/api/nlp
 - [Ben Awad on CI/CD clean-up video](https://www.youtube.com/watch?v=CYlUcIH3dPg)
 - [Spacy](https://spacy.io/)
 - [Natural Language Processing](https://en.wikipedia.org/wiki/Natural_language_processing)</ReactMarkdown>
-	    );;
+	    );
 	}	
 
         const mountPoint = document.getElementById("root");
