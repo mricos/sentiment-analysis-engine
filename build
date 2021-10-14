@@ -1,0 +1,3 @@
+export CLIENT_CONTENT="$(cat ./markdown/client.md)"
+
+./node_modules/envsub/bin/envsub.js --env API_ROOT --env CLIENT_CONTENT index.env ./public/index.html
