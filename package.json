@@ -1,7 +1,7 @@
 {
   "type": "module",
   "scripts": {
-    "build": "./node_modules/envsub/bin/envsub.js index.env ./public/index.html"
+    "build": "./node_modules/envsub/bin/envsub.js --env API_ROOT --env CLIENT_CONTENT=\"$(cat ./markdown/client.md)\" index.env ./public/index.html"
   },
   "dependencies": {
     "@vercel/node": "^1.12.1",

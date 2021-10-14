@@ -1,4 +1,6 @@
+#
 # Sentiment Analysis Engine GUI  
+
 Provides positive, negative, or neutral classification for a sample of  English language text.  
 Current version is based off of [Natural](https://github.com/NaturalNode/natural), the node-based NLP library.  
 
