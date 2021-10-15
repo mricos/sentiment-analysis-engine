@@ -13,6 +13,10 @@
     ></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/react-markdown/4.3.1/react-markdown.js" integrity="sha512-uVjoOKL4IHlUC7gc0LuPfhTqvJBi37Uff7EC3s4tXAZp0rgskDv40jgOIvv3ImoPFZyCwUtsQ4VQ1SRXKHyrXQ==" crossorigin="anonymous" referrerpolicy="no-referrer"></script>
     <script
+      src="https://unpkg.com/browse/remark-gfm@3.0.0/index.js"
+    >
+    </script>
+    <script
       crossorigin
       src="https://unpkg.com/babel-standalone@6.26.0/babel.js"
     ></script>
@@ -101,7 +105,13 @@ localhost:3000/api/nlp
 - [Natural Language Processing](https://en.wikipedia.org/wiki/Natural_language_processing)`	
 
         const mountPoint = document.getElementById("root");
-	ReactDOM.render(<ReactMarkdown children={content} />, mountPoint);
+	ReactDOM.render(
+	    <ReactMarkdown 
+	        children={content}
+		remarkPlugins={[remarkGfm]}
+	    />, 
+	    mountPoint
+	);
 
     </script>
   </body>
