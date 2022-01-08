@@ -1,10 +1,11 @@
+# converts strings to floats and adds them all up
 while read line; do
   curl -s -X POST\
   -H "Content-Type: application/json"\
   -d '{"data": "'"$line"'"}'\
-  'localhost:3000/api/nlp'
-done < lockdown.txt | jq '.sentiment'
+  'localhost:3000/api/nlp' &
+done < lockdown.txt | jq '.sentiment|tonumber' | jq -s '.|add'
 
-curl -s -X POST\
- -H "Content-Type: application/json" \
--d '{"data": ["good", "bad", "ok"]}' 'localhost:3000/api/nlp' | jq '.sentiment'
+#curl -s -X POST\
+# -H "Content-Type: application/json" \
+#-d '{"data": ["good", "bad", "ok"]}' 'localhost:3000/api/nlp' | jq '.sentiment'

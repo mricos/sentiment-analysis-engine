@@ -4,11 +4,17 @@ Provides positive, negative, or neutral classification for a sample of  English 
 
 Current version is based off of [Natural](https://github.com/NaturalNode/natural), the node-based NLP library.
 
-## Install
+## Versions
+
+There are two current versions of this application. One deployed through Vercel which can be found [here](https://sentiment-analysis-engine.vercel.app/)
+
+The other version can be found in the directory titled ```node-nlp-api``` which can be run locally as an API on your local machine. Most tools associated with this project are written in Nodejs or bash.
+
+## Install of node-nlp-api
 ```bash
 git clone https://gitlab.com/zoverlvx/sentiment-analysis-engine.git
 
-cd sentiment-analysis-engine && npm i
+cd sentiment-analysis-engine/node-nlp-api && npm i
 ```
 
 ## Run
@@ -43,6 +49,10 @@ curl -X POST \
 -d '{"data": ["good", "bad", "beautiful"]}'\
 localhost:3000/api/nlp
 ```
+
+This API is currently equipped with stress tests.
+The script ```test``` will use text examples from ```lockdown.txt```
+in order to test the response rate of the API.
 
 
 ## 12 Factors
